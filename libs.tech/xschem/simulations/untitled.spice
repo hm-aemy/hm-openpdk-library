@@ -1,0 +1,59 @@
+** sch_path: /home/designer/shared/hm-openpdk-library/libs.tech/xschem/untitled.sch
+**.subckt untitled
+Vdd vdd GND 1.2
+Vss vss GND 0
+iovdd iovdd GND 3.3
+iovss iovss GND 0
+x1 vss vdd vss iovss iovdd c2p vout iovdd c2p_en net1 sg13g2_IOPadInOut30mA
+R1 vout GND 100000 m=1
+R2 net1 GND 100000 m=1
+**** begin user architecture code
+
+
+
+Vc2p c2p 0 PULSE(0 3.3 20u 1u 1u 30u 100u)
+Ven c2p_en 0 3.3
+Votype otype 0 0
+
+.lib /opt/pdks/ihp-sg13g2/libs.tech/ngspice/models/cornerMOSlv.lib mos_tt
+.lib /opt/pdks/ihp-sg13g2/libs.tech/ngspice/models/cornerMOShv.lib mos_tt
+.lib /opt/pdks/ihp-sg13g2/libs.tech/ngspice/models/cornerRES.lib res_typ
+.include /opt/pdks/ihp-sg13g2/libs.tech/ngspice/models/diodes.lib
+
+.control
+tran 1n 100u
+plot c2p c2p_en otype
+plot vout
+.endc
+
+
+
+**** end user architecture code
+**.ends
+
+* expanding   symbol:  /home/designer/shared/openpdk-libraries/ihp-sg13g2/sg13g2_io/xschem/sg13g2_IOPadInOut30mA.sym # of pins=10
+** sym_path: /home/designer/shared/openpdk-libraries/ihp-sg13g2/sg13g2_io/xschem/sg13g2_IOPadInOut30mA.sym
+** sch_path: /home/designer/shared/openpdk-libraries/ihp-sg13g2/sg13g2_io/xschem/sg13g2_IOPadInOut30mA.sch
+.subckt sg13g2_IOPadInOut30mA vss vdd ! iovss iovdd1 c2p pad iovdd c2p_en p2c
+*.iopin iovdd1
+*.iopin vss
+*.iopin vdd
+*.iopin !
+*.iopin iovss
+*.iopin iovdd
+*.iopin pad
+*.iopin c2p_en
+*.iopin c2p
+*.iopin p2c
+XR2 vss ! ptap1 R=22.47 w=4.9e-6 l=4.9e-6
+XR1 iovss ! ptap1 R=0.209 w=66.51e-6 l=66.51e-6
+*  x2 -  sg13g2_DCPDiode_noptap  IS MISSING !!!!
+*  x1 -  sg13g2_DCNDiode  IS MISSING !!!!
+*  x3 -  sg13g2_GateDecode_noptap  IS MISSING !!!!
+*  x4 -  sg13g2_Clamp_N15N15D  IS MISSING !!!!
+*  x5 -  sg13g2_Clamp_P15N15D_noptap  IS MISSING !!!!
+*  x6 -  sg13g2_LevelDown_noptap  IS MISSING !!!!
+.ends
+
+.GLOBAL GND
+.end

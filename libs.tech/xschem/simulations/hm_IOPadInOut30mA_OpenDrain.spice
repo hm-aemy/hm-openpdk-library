@@ -1,0 +1,128 @@
+** sch_path: /home/designer/shared/hm-openpdk-library/libs.tech/xschem/hm_io/hm_IOPadInOut30mA_OpenDrain.sch
+**.subckt hm_IOPadInOut30mA_OpenDrain iovdd1 vss vdd ! iovss iovdd pad c2p_en c2p p2c otype
+*.iopin iovdd1
+*.iopin vss
+*.iopin vdd
+*.iopin !
+*.iopin iovss
+*.iopin iovdd
+*.iopin pad
+*.iopin c2p_en
+*.iopin c2p
+*.iopin p2c
+*.iopin otype
+XR2 vss ! ptap1 R=22.47 w=4.9e-6 l=4.9e-6
+XR1 iovss ! ptap1 R=0.209 w=66.51e-6 l=66.51e-6
+x2 iovdd ! pad pad ! sg13g2_DCPDiode_noptap
+x1 pad iovss pad iovdd ! sg13g2_DCNDiode
+x4 pad pad pad pad pad pad pad pad iovss ! net2 sg13g2_Clamp_N15N15D
+x5 net1 iovdd iovss pad pad pad pad pad pad pad pad ! sg13g2_Clamp_P15N15D_noptap
+x6 iovdd1 iovss pad p2c vdd vss ! sg13g2_LevelDown_noptap
+**.ends
+
+* expanding   symbol:  hm_stdcells/sg13g2_DCPDiode_noptap.sym # of pins=5
+** sym_path: /home/designer/shared/hm-openpdk-library/libs.tech/xschem/hm_stdcells/sg13g2_DCPDiode_noptap.sym
+** sch_path: /home/designer/shared/hm-openpdk-library/libs.tech/xschem/hm_stdcells/sg13g2_DCPDiode_noptap.sch
+.subckt sg13g2_DCPDiode_noptap cathode guard anode1 anode2 sub
+*.iopin anode2
+*.iopin cathode
+*.iopin guard
+*.iopin anode1
+*.iopin sub
+XD1 anode1 cathode dpantenna l=27.78u w=1.26u
+XD2 anode2 cathode dpantenna l=27.78u w=1.26u
+.ends
+
+
+* expanding   symbol:  hm_stdcells/sg13g2_DCNDiode.sym # of pins=5
+** sym_path: /home/designer/shared/hm-openpdk-library/libs.tech/xschem/hm_stdcells/sg13g2_DCNDiode.sym
+** sch_path: /home/designer/shared/hm-openpdk-library/libs.tech/xschem/hm_stdcells/sg13g2_DCNDiode.sch
+.subckt sg13g2_DCNDiode cathode1 anode cathode2 guard sub
+*.iopin cathode2
+*.iopin guard
+*.iopin anode
+*.iopin cathode1
+*.iopin sub
+XR1 anode sub ptap1 R=5.179 w=11.9e-6 l=11.9e-6
+XD1 sub cathode1 dantenna l=27.78u w=1.26u
+* noconn guard
+XD2 sub cathode2 dantenna l=27.78u w=1.26u
+.ends
+
+
+* expanding   symbol:  hm_stdcells/sg13g2_Clamp_N15N15D.sym # of pins=4
+** sym_path: /home/designer/shared/hm-openpdk-library/libs.tech/xschem/hm_stdcells/sg13g2_Clamp_N15N15D.sym
+** sch_path: /home/designer/shared/hm-openpdk-library/libs.tech/xschem/hm_stdcells/sg13g2_Clamp_N15N15D.sch
+.subckt sg13g2_Clamp_N15N15D pad[7] pad[6] pad[5] pad[4] pad[3] pad[2] pad[1] pad[0] iovss sub gate
+*.iopin iovss
+*.iopin gate
+*.iopin pad[7],pad[6],pad[5],pad[4],pad[3],pad[2],pad[1],pad[0]
+*.iopin sub
+XR1 iovss sub ptap1 R=11.44 w=7.47e-6 l=7.47e-6
+XD1 sub gate dantenna l=0.78u w=0.78u
+XM1 pad[0] gate iovss sub sg13_hv_nmos w=8.8u l=0.6u ng=2 m=1
+XM2 pad[1] gate iovss sub sg13_hv_nmos w=8.8u l=0.6u ng=2 m=1
+XM3 pad[2] gate iovss sub sg13_hv_nmos w=8.8u l=0.6u ng=2 m=1
+XM4 pad[3] gate iovss sub sg13_hv_nmos w=8.8u l=0.6u ng=2 m=1
+XM5 pad[4] gate iovss sub sg13_hv_nmos w=8.8u l=0.6u ng=2 m=1
+XM6 pad[5] gate iovss sub sg13_hv_nmos w=8.8u l=0.6u ng=2 m=1
+XM7 pad[6] gate iovss sub sg13_hv_nmos w=8.8u l=0.6u ng=2 m=1
+XM8 pad[7] gate iovss sub sg13_hv_nmos w=4.4u l=0.6u ng=1 m=1
+.ends
+
+
+* expanding   symbol:  hm_stdcells/sg13g2_Clamp_P15N15D_noptap.sym # of pins=5
+** sym_path: /home/designer/shared/hm-openpdk-library/libs.tech/xschem/hm_stdcells/sg13g2_Clamp_P15N15D_noptap.sym
+** sch_path: /home/designer/shared/hm-openpdk-library/libs.tech/xschem/hm_stdcells/sg13g2_Clamp_P15N15D_noptap.sch
+.subckt sg13g2_Clamp_P15N15D_noptap gate iovdd iovss pad[7] pad[6] pad[5] pad[4] pad[3] pad[2] pad[1] pad[0] sub
+*.iopin iovss
+*.iopin gate
+*.iopin iovdd
+*.iopin pad[7],pad[6],pad[5],pad[4],pad[3],pad[2],pad[1],pad[0]
+*.iopin sub
+XM1 pad[0] gate iovdd iovdd sg13_hv_pmos w=26.64u l=0.6u ng=4 m=1
+XD1 gate iovdd dpantenna l=0.78u w=0.78u
+XM2 pad[1] gate iovdd iovdd sg13_hv_pmos w=26.64u l=0.6u ng=4 m=1
+XM3 pad[2] gate iovdd iovdd sg13_hv_pmos w=26.64u l=0.6u ng=4 m=1
+XM4 pad[3] gate iovdd iovdd sg13_hv_pmos w=26.64u l=0.6u ng=4 m=1
+XM5 pad[4] gate iovdd iovdd sg13_hv_pmos w=26.64u l=0.6u ng=4 m=1
+XM6 pad[5] gate iovdd iovdd sg13_hv_pmos w=26.64u l=0.6u ng=4 m=1
+XM7 pad[6] gate iovdd iovdd sg13_hv_pmos w=26.64u l=0.6u ng=4 m=1
+XM8 pad[7] gate iovdd iovdd sg13_hv_pmos w=13.32u l=0.6u ng=2 m=1
+.ends
+
+
+* expanding   symbol:  hm_stdcells/sg13g2_LevelDown_noptap.sym # of pins=7
+** sym_path: /home/designer/shared/hm-openpdk-library/libs.tech/xschem/hm_stdcells/sg13g2_LevelDown_noptap.sym
+** sch_path: /home/designer/shared/hm-openpdk-library/libs.tech/xschem/hm_stdcells/sg13g2_LevelDown_noptap.sch
+.subckt sg13g2_LevelDown_noptap iovdd iovss pad core vdd vss !
+*.iopin iovdd
+*.iopin vss
+*.iopin core
+*.iopin pad
+*.iopin vdd
+*.iopin iovss
+*.iopin !
+XM5 net2 net1 vdd vdd sg13_hv_pmos w=4.65u l=0.45u ng=1 m=1
+XM6 net2 net1 vss ! sg13_hv_nmos w=2.65u l=0.45u ng=1 m=1
+XM7 core net2 vss ! sg13_lv_nmos w=2.75u l=0.13u ng=1 m=1
+XM8 core net2 vdd vdd sg13_lv_pmos w=4.75u l=0.13u ng=1 m=1
+x1 net1 iovdd iovss pad ! sg13g2_SecondaryProtection_noptap
+.ends
+
+
+* expanding   symbol:  hm_stdcells/sg13g2_SecondaryProtection_noptap.sym # of pins=5
+** sym_path: /home/designer/shared/hm-openpdk-library/libs.tech/xschem/hm_stdcells/sg13g2_SecondaryProtection_noptap.sym
+** sch_path: /home/designer/shared/hm-openpdk-library/libs.tech/xschem/hm_stdcells/sg13g2_SecondaryProtection_noptap.sch
+.subckt sg13g2_SecondaryProtection_noptap core iovdd iovss pad !
+*.iopin iovss
+*.iopin core
+*.iopin pad
+*.iopin iovdd
+*.iopin !
+XD1 core iovdd dpantenna l=4.98u w=0.64u
+XD2 ! core dantenna l=3.1u w=0.64u
+XR1 pad core sub! rppd w=1e-6 l=2e-6 m=1 b=0
+.ends
+
+.end
