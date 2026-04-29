@@ -1,0 +1,51 @@
+v {xschem version=3.4.6 file_version=1.2}
+G {}
+K {type=subcircuit
+format="@name @pinlist @symname"
+template="name=x1"
+}
+V {}
+S {}
+E {}
+L 4 20 -60 20 -40 {}
+L 4 -0 -60 -0 -40 {}
+L 4 -20 -60 -20 -40 {}
+L 4 -60 -20 -40 -20 {}
+L 4 -60 -10 -40 -10 {}
+L 4 -60 0 -40 0 {}
+L 4 -60 10 -40 10 {}
+L 4 -60 20 -40 20 {}
+L 4 -60 30 -40 30 {}
+L 4 40 -0 60 -0 {}
+L 4 -20 40 -20 60 {}
+L 4 -0 40 0 60 {}
+L 4 20 40 20 60 {}
+B 5 17.5 -62.5 22.5 -57.5 {name=iovdd dir=inout}
+B 5 -2.5 -62.5 2.5 -57.5 {name=iovdd1 dir=inout}
+B 5 -22.5 -62.5 -17.5 -57.5 {name=vdd dir=inout}
+B 5 -62.5 17.5 -57.5 22.5 {name=pu_en dir=inout}
+B 5 -62.5 -12.5 -57.5 -7.5 {name=c2p dir=inout}
+B 5 57.5 -2.5 62.5 2.5 {name=pad dir=inout}
+B 5 -62.5 -2.5 -57.5 2.5 {name=c2p_en dir=inout}
+B 5 -62.5 27.5 -57.5 32.5 {name=pd_en dir=inout}
+B 5 -62.5 7.5 -57.5 12.5 {name=otype dir=inout}
+B 5 -62.5 -22.5 -57.5 -17.5 {name=p2c dir=inout}
+B 5 -22.5 57.5 -17.5 62.5 {name=! dir=inout}
+B 5 -2.5 57.5 2.5 62.5 {name=vss dir=inout}
+B 5 17.5 57.5 22.5 62.5 {name=iovss dir=inout}
+P 4 5 40 -40 -40 -40 -40 40 40 40 40 -40 {}
+T {@symname} 28 44 0 0 0.1 0.1 {}
+T {@name} 35 -52 0 0 0.1 0.1 {}
+T {iovdd} 14 -45 1 1 0.1 0.1 {}
+T {iovdd1} -6 -45 1 1 0.1 0.1 {}
+T {vdd} -26 -45 1 1 0.1 0.1 {}
+T {pu_en} -65 16 0 1 0.1 0.1 {}
+T {c2p} -65 -14 0 1 0.1 0.1 {}
+T {pad} 65 -14 0 1 0.1 0.1 {}
+T {c2p_en} -65 -4 0 1 0.1 0.1 {}
+T {pd_en} -65 26 0 1 0.1 0.1 {}
+T {otype} -65 6 0 1 0.1 0.1 {}
+T {p2c} -65 -24 0 1 0.1 0.1 {}
+T {!} -25 56 0 1 0.1 0.1 {}
+T {vss} -5 56 0 1 0.1 0.1 {}
+T {iovss} 35 66 0 1 0.1 0.1 {}
