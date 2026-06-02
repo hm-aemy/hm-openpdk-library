@@ -1,0 +1,16 @@
+02-Jun-2026 16:12:13 | INFO    | Your Klayout version is: KLayout 0.30.5
+02-Jun-2026 16:12:13 | INFO    | Running SG13G2 LVS checks on design /home/designer/shared/hm-openpdk-library/libs.tech/gds/hm_IOPadInOut30mA_OpenDrain_PUPD.gds on cell hm_IOPadInOut30mA_OpenDrain_PUPD
+02-Jun-2026 16:12:15 | INFO    | ==============================================================================
+02-Jun-2026 16:12:15 | INFO    | Important Summary
+02-Jun-2026 16:12:15 | INFO    | +------------------+---------------------------------------------------------------------------------------------------------------------+
+02-Jun-2026 16:12:15 | INFO    | | Status           | PASS                                                                                                                |
+02-Jun-2026 16:12:15 | INFO    | | Mode             | COMPARE                                                                                                             |
+02-Jun-2026 16:12:15 | INFO    | | Outcome          | Comparison mode: PASS (netlists match).                                                                             |
+02-Jun-2026 16:12:15 | INFO    | | Layout           | hm_IOPadInOut30mA_OpenDrain_PUPD.gds                                                                                |
+02-Jun-2026 16:12:15 | INFO    | | Top Cell         | hm_IOPadInOut30mA_OpenDrain_PUPD                                                                                    |
+02-Jun-2026 16:12:15 | INFO    | | Results Dir      | /home/designer/shared/hm-openpdk-library/libs.tech/gds/lvs_run_hm_IOPadInOut30mA_OpenDrain_PUPD_2026_06_02_16_12_13 |
+02-Jun-2026 16:12:15 | INFO    | | Warnings         | 0                                                                                                                   |
+02-Jun-2026 16:12:15 | INFO    | | Errors           | 0                                                                                                                   |
+02-Jun-2026 16:12:15 | INFO    | | Run Time (s)     | 2.511                                                                                                               |
+02-Jun-2026 16:12:15 | INFO    | +------------------+---------------------------------------------------------------------------------------------------------------------+
+02-Jun-2026 16:12:15 | INFO    | ==============================================================================
