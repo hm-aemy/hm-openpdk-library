@@ -30,11 +30,10 @@ N 120 30 130 30 {lab=!}
 N 130 -90 130 30 {lab=!}
 N 120 -90 130 -90 {lab=!}
 N 130 -110 130 -90 {lab=!}
-N 60 -40 80 -40 {lab=pad}
 N 130 30 130 100 {lab=!}
 N 110 100 130 100 {lab=!}
 N -60 -110 -60 -50 {lab=#net1}
-N -60 -40 -60 40 {lab=#net2}
+N -60 -40 -60 40 {lab=ngate}
 N -30 80 -30 100 {lab=!}
 N -210 100 -30 100 {lab=!}
 N -20 80 -20 140 {lab=iovss}
@@ -63,7 +62,7 @@ N -340 -50 -320 -50 {lab=c2p}
 N -340 -40 -340 -30 {lab=c2p_en}
 N -340 -40 -320 -40 {lab=c2p_en}
 N -240 -50 -60 -50 {lab=#net1}
-N -240 -40 -60 -40 {lab=#net2}
+N -240 -40 -60 -40 {lab=ngate}
 N 10 -40 10 -20 {lab=pad}
 N -160 -20 -160 40 {lab=pad}
 N -160 -20 10 -20 {lab=pad}
@@ -82,20 +81,33 @@ N 10 -100 10 -40 {lab=pad}
 N 10 -20 10 30 {lab=pad}
 N -340 0 -320 0 {lab=otype}
 N -320 -30 -320 0 {lab=otype}
-N 380 -40 390 -40 {lab=pad}
-N 140 -180 320 -180 {lab=iovdd}
-N 130 100 330 100 {lab=!}
-N 330 0 330 100 {lab=!}
-N 130 140 310 140 {lab=iovss}
-N 310 0 310 140 {lab=iovss}
-N 230 -60 270 -60 {lab=pu_en}
-N 230 -20 270 -20 {lab=pd_en}
-N 320 -180 320 -80 {lab=iovdd}
-N 80 -40 250 -40 {lab=pad}
-N 250 -40 250 30 {lab=pad}
-N 250 30 380 30 {lab=pad}
-N 380 -40 380 30 {lab=pad}
-N 370 -40 380 -40 {lab=pad}
+N 550 -40 560 -40 {lab=pad}
+N 550 -40 550 60 {lab=pad}
+N 540 -40 550 -40 {lab=pad}
+N 180 -40 180 60 {lab=pad}
+N 80 -40 180 -40 {lab=pad}
+N 60 -40 80 -40 {lab=pad}
+N 180 60 550 60 {lab=pad}
+N -200 120 300 120 {lab=vss}
+N 340 20 340 100 {lab=!}
+N 130 100 340 100 {lab=!}
+N 340 -180 490 -180 {lab=iovdd1}
+N 340 -180 340 -100 {lab=iovdd1}
+N -200 -160 300 -160 {lab=vdd}
+N 380 -60 440 -60 {lab=pu_en}
+N 380 -20 440 -20 {lab=pd_en}
+N 300 -160 300 -100 {lab=vdd}
+N 300 20 300 120 {lab=vss}
+N 240 -60 260 -60 {lab=pu}
+N 240 -20 260 -20 {lab=pd}
+N 490 -180 490 -80 {lab=iovdd1}
+N 340 -200 340 -180 {lab=iovdd1}
+N -190 -200 340 -200 {lab=iovdd1}
+N -190 -200 -190 -180 {lab=iovdd1}
+N 490 0 490 100 {lab=!}
+N 340 100 490 100 {lab=!}
+N 300 120 510 120 {lab=vss}
+N 510 -0 510 120 {lab=vss}
 C {iopin.sym} -340 -180 0 1 {name=p9 lab=iovdd1
 }
 C {iopin.sym} -340 120 0 1 {name=p10 lab=vss
@@ -122,7 +134,7 @@ lvs_format="tcleval(@name @pinlist @model A=4422.9752p P=996.1u)"
 }
 C {iopin.sym} -20 -180 0 1 {name=p2 lab=iovdd
 }
-C {iopin.sym} 390 -40 0 0 {name=p3 lab=pad
+C {iopin.sym} 560 -40 0 0 {name=p3 lab=pad
 }
 C {iopin.sym} -340 -30 0 1 {name=p4 lab=c2p_en
 }
@@ -138,8 +150,12 @@ C {iopin.sym} -340 40 0 1 {name=p6 lab=p2c
 C {iopin.sym} -340 0 0 1 {name=p7 lab=otype
 }
 C {/home/designer/shared/hm-openpdk-library/libs.tech/xschem/hm_stdcells/hm_GateDecode_OpenDrain_noptap.sym} -280 -40 0 0 {name=x3}
-C {iopin.sym} 230 -60 0 1 {name=p8 lab=pu_en
+C {lab_pin.sym} 400 -60 1 0 {name=p30 sig_type=std_logic lab=pu_en}
+C {lab_pin.sym} 400 -20 3 0 {name=p31 sig_type=std_logic lab=pd_en}
+C {/home/designer/shared/hm-openpdk-library/libs.tech/xschem/hm_stdcells/hm_PUPD_decoder.sym} 320 -40 0 0 {name=x8}
+C {iopin.sym} 240 -60 0 1 {name=p8 lab=pu
 }
-C {iopin.sym} 230 -20 0 1 {name=p11 lab=pd_en
+C {iopin.sym} 240 -20 0 1 {name=p11 lab=pd
 }
-C {/home/designer/shared/hm-openpdk-library/libs.tech/xschem/hm_stdcells/hm_PUPD_noptap.sym} 320 -40 0 0 {name=x7}
+C {/home/designer/shared/hm-openpdk-library/libs.tech/xschem/hm_stdcells/hm_PUPD_noptap.sym} 490 -40 0 0 {name=x7}
+C {lab_pin.sym} -130 -40 2 0 {name=p12 sig_type=std_logic lab=ngate}

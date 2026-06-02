@@ -94,7 +94,7 @@ model=ptap1
 spiceprefix=X
 w=1.54e-6
 l=1.54e-6
-lvs_format="tcleval(@name @pinlist @model A=2.3625p P=16.95u )"
+lvs_format="tcleval(@name @pinlist @model A=3.0195p P=21.93u )"
 }
 C {lab_pin.sym} -220 50 0 0 {name=p1 sig_type=std_logic lab=iovdd}
 C {lab_pin.sym} -220 70 0 0 {name=p3 sig_type=std_logic lab=vdd}
