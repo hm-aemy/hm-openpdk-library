@@ -121,7 +121,7 @@ model=ptap1
 spiceprefix=X
 w=4.9e-6
 l=4.9e-6
-lvs_format="tcleval(@name @pinlist @model A=53.3896p P=333.48u )"
+lvs_format="tcleval(@name @pinlist @model A=52.5856p P=327.52u )"
 }
 C {iopin.sym} -340 140 0 1 {name=p1 lab=iovss
 }
