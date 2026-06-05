@@ -3,7 +3,7 @@ VERSION 5.7 ;
   DIVIDERCHAR "/" ;
   BUSBITCHARS "[]" ;
 MACRO hm_IOPadInOut30mA_OpenDrain_PUPD
-  CLASS BLOCK ;
+  CLASS PAD INOUT ;
   FOREIGN hm_IOPadInOut30mA_OpenDrain_PUPD ;
   ORIGIN 0.000 0.000 ;
   SIZE 80.000 BY 180.000 ;
@@ -90,6 +90,8 @@ MACRO hm_IOPadInOut30mA_OpenDrain_PUPD
     END
   END otype
   PIN vdd
+    DIRECTION INOUT ;
+    USE POWER ;
     ANTENNADIFFAREA 57.574398 ;
     PORT
       LAYER Metal3 ;
@@ -109,6 +111,8 @@ MACRO hm_IOPadInOut30mA_OpenDrain_PUPD
     END
   END vdd
   PIN vss
+    DIRECTION INOUT ;
+    USE GROUND ;
     ANTENNADIFFAREA 88.124496 ;
     PORT
       LAYER Metal3 ;
@@ -128,6 +132,8 @@ MACRO hm_IOPadInOut30mA_OpenDrain_PUPD
     END
   END vss
   PIN iovdd
+    DIRECTION INOUT ;
+    USE POWER ;
     ANTENNADIFFAREA 269.368805 ;
     PORT
       LAYER Metal3 ;
@@ -171,6 +177,8 @@ MACRO hm_IOPadInOut30mA_OpenDrain_PUPD
     END
   END iovdd
   PIN iovss
+    DIRECTION INOUT ;
+    USE GROUND ;
     PORT
       LAYER Metal3 ;
         RECT 0.000 34.500 80.000 60.000 ;
@@ -256,4 +264,3 @@ MACRO hm_IOPadInOut30mA_OpenDrain_PUPD
   END
 END hm_IOPadInOut30mA_OpenDrain_PUPD
 END LIBRARY
-
