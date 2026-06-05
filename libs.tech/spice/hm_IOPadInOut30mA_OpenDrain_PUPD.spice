@@ -1,7 +1,7 @@
 ** sch_path: /home/designer/shared/hm-openpdk-library/libs.tech/xschem/hm_io/hm_IOPadInOut30mA_OpenDrain_PUPD.sch
 .subckt hm_IOPadInOut30mA_OpenDrain_PUPD iovdd iovdd1 vdd pu c2p pad c2p_en pd otype p2c ! vss iovss
 *.PININFO iovdd1:B vss:B vdd:B !:B iovss:B iovdd:B pad:B c2p_en:B c2p:B p2c:B otype:B pu:B pd:B
-R2 vss ! ptap1 A=24p P=160.6u
+R2 vss ! ptap1 A=52.5856p P=327.52u
 R1 iovss ! ptap1 A=4422.9752p P=996.1u
 x2 iovdd ! pad pad ! sg13g2_DCPDiode_noptap
 x1 pad iovss pad iovdd ! sg13g2_DCNDiode
@@ -40,6 +40,7 @@ DD2 sub cathode2 dantenna l=27.78u w=1.26u
 ** sch_path: /home/designer/shared/hm-openpdk-library/libs.tech/xschem/hm_stdcells/sg13g2_Clamp_N15N15D.sch
 .subckt sg13g2_Clamp_N15N15D pad[7] pad[6] pad[5] pad[4] pad[3] pad[2] pad[1] pad[0] iovss sub gate
 *.PININFO iovss:B gate:B pad[7:0]:B sub:B
+R1 iovss sub ptap1 A=55.7736p P=328.08u
 DD1 sub gate dantenna l=0.78u w=0.78u
 MM1 pad[0] gate iovss sub sg13_hv_nmos w=8.8u l=0.6u ng=2 m=1
 MM2 pad[1] gate iovss sub sg13_hv_nmos w=8.8u l=0.6u ng=2 m=1
@@ -49,7 +50,6 @@ MM5 pad[4] gate iovss sub sg13_hv_nmos w=8.8u l=0.6u ng=2 m=1
 MM6 pad[5] gate iovss sub sg13_hv_nmos w=8.8u l=0.6u ng=2 m=1
 MM7 pad[6] gate iovss sub sg13_hv_nmos w=8.8u l=0.6u ng=2 m=1
 MM8 pad[7] gate iovss sub sg13_hv_nmos w=4.4u l=0.6u ng=1 m=1
-R1 iovss sub ptap1 A=55.7736p P=328.08u
 .ends
 
 
