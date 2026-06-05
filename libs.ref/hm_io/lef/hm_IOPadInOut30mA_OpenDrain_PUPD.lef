@@ -1,0 +1,259 @@
+VERSION 5.7 ;
+  NOWIREEXTENSIONATPIN ON ;
+  DIVIDERCHAR "/" ;
+  BUSBITCHARS "[]" ;
+MACRO hm_IOPadInOut30mA_OpenDrain_PUPD
+  CLASS BLOCK ;
+  FOREIGN hm_IOPadInOut30mA_OpenDrain_PUPD ;
+  ORIGIN 0.000 0.000 ;
+  SIZE 80.000 BY 180.000 ;
+  PIN p2c
+    ANTENNADIFFAREA 2.550000 ;
+    PORT
+      LAYER Metal2 ;
+        RECT 59.830 157.810 60.120 180.000 ;
+    END
+    PORT
+      LAYER Metal3 ;
+        RECT 59.725 179.710 60.225 180.000 ;
+    END
+  END p2c
+  PIN c2p_en
+    ANTENNAGATEAREA 1.084200 ;
+    PORT
+      LAYER Metal2 ;
+        RECT 21.380 174.045 21.670 180.000 ;
+    END
+    PORT
+      LAYER Metal3 ;
+        RECT 21.275 179.710 21.775 180.000 ;
+    END
+  END c2p_en
+  PIN c2p
+    ANTENNAGATEAREA 2.168400 ;
+    PORT
+      LAYER Metal2 ;
+        RECT 18.330 178.090 18.620 180.000 ;
+    END
+    PORT
+      LAYER Metal3 ;
+        RECT 18.225 179.710 18.725 180.000 ;
+    END
+  END c2p
+  PIN pad
+    ANTENNADIFFAREA 299.491180 ;
+    PORT
+      LAYER Metal2 ;
+        RECT 5.000 0.000 75.000 3.000 ;
+    END
+    PORT
+      LAYER Metal3 ;
+        RECT 5.000 0.000 75.000 3.000 ;
+    END
+    PORT
+      LAYER Metal4 ;
+        RECT 5.000 0.000 75.000 3.000 ;
+    END
+    PORT
+      LAYER Metal5 ;
+        RECT 5.000 0.000 75.000 3.000 ;
+    END
+    PORT
+      LAYER TopMetal1 ;
+        RECT 5.000 0.000 75.000 3.000 ;
+    END
+    PORT
+      LAYER TopMetal2 ;
+        RECT 5.000 0.000 75.000 3.000 ;
+    END
+  END pad
+  PIN pu
+    ANTENNAGATEAREA 2.168400 ;
+    ANTENNADIFFAREA 2.835600 ;
+    PORT
+      LAYER Metal3 ;
+        RECT 32.180 179.710 32.680 180.000 ;
+    END
+  END pu
+  PIN pd
+    ANTENNAGATEAREA 2.168400 ;
+    PORT
+      LAYER Metal3 ;
+        RECT 37.065 179.710 37.565 180.000 ;
+    END
+  END pd
+  PIN otype
+    ANTENNAGATEAREA 1.084200 ;
+    PORT
+      LAYER Metal3 ;
+        RECT 24.330 179.710 24.830 180.000 ;
+    END
+  END otype
+  PIN vdd
+    ANTENNADIFFAREA 57.574398 ;
+    PORT
+      LAYER Metal3 ;
+        RECT 0.000 160.000 80.000 178.000 ;
+    END
+    PORT
+      LAYER Metal4 ;
+        RECT 0.000 140.000 80.000 155.800 ;
+    END
+    PORT
+      LAYER Metal5 ;
+        RECT 0.000 140.000 80.000 158.000 ;
+    END
+    PORT
+      LAYER TopMetal1 ;
+        RECT 0.000 140.000 80.000 158.000 ;
+    END
+  END vdd
+  PIN vss
+    ANTENNADIFFAREA 88.124496 ;
+    PORT
+      LAYER Metal3 ;
+        RECT 0.000 140.000 80.000 158.000 ;
+    END
+    PORT
+      LAYER Metal4 ;
+        RECT 0.000 162.200 80.000 178.000 ;
+    END
+    PORT
+      LAYER Metal5 ;
+        RECT 0.000 160.000 80.000 178.000 ;
+    END
+    PORT
+      LAYER TopMetal1 ;
+        RECT 0.000 160.000 80.000 178.000 ;
+    END
+  END vss
+  PIN iovdd
+    ANTENNADIFFAREA 269.368805 ;
+    PORT
+      LAYER Metal3 ;
+        RECT 0.000 66.000 80.000 91.500 ;
+    END
+    PORT
+      LAYER Metal3 ;
+        RECT 0.000 93.500 80.000 119.000 ;
+    END
+    PORT
+      LAYER Metal4 ;
+        RECT 0.000 66.000 80.000 91.500 ;
+    END
+    PORT
+      LAYER Metal4 ;
+        RECT 0.000 93.500 80.000 119.000 ;
+    END
+    PORT
+      LAYER Metal5 ;
+        RECT 0.000 66.000 80.000 91.500 ;
+    END
+    PORT
+      LAYER Metal5 ;
+        RECT 0.000 93.500 80.000 119.000 ;
+    END
+    PORT
+      LAYER TopMetal1 ;
+        RECT 0.000 66.000 80.000 91.500 ;
+    END
+    PORT
+      LAYER TopMetal1 ;
+        RECT 0.000 93.500 80.000 119.000 ;
+    END
+    PORT
+      LAYER TopMetal2 ;
+        RECT 0.000 67.500 80.000 90.000 ;
+    END
+    PORT
+      LAYER TopMetal2 ;
+        RECT 0.000 95.000 80.000 117.500 ;
+    END
+  END iovdd
+  PIN iovss
+    PORT
+      LAYER Metal3 ;
+        RECT 0.000 34.500 80.000 60.000 ;
+    END
+    PORT
+      LAYER Metal3 ;
+        RECT 0.000 126.000 80.000 134.000 ;
+    END
+    PORT
+      LAYER Metal3 ;
+        RECT 0.000 7.000 80.000 32.500 ;
+    END
+    PORT
+      LAYER Metal4 ;
+        RECT 0.000 34.500 80.000 60.000 ;
+    END
+    PORT
+      LAYER Metal4 ;
+        RECT 0.000 126.000 80.000 134.000 ;
+    END
+    PORT
+      LAYER Metal4 ;
+        RECT 0.000 7.000 80.000 32.500 ;
+    END
+    PORT
+      LAYER Metal5 ;
+        RECT 0.000 34.500 80.000 60.000 ;
+    END
+    PORT
+      LAYER Metal5 ;
+        RECT 0.000 126.000 80.000 134.000 ;
+    END
+    PORT
+      LAYER Metal5 ;
+        RECT 0.000 7.000 80.000 32.500 ;
+    END
+    PORT
+      LAYER TopMetal1 ;
+        RECT 0.000 34.500 80.000 60.000 ;
+    END
+    PORT
+      LAYER TopMetal1 ;
+        RECT 0.000 126.000 80.000 134.000 ;
+    END
+    PORT
+      LAYER TopMetal1 ;
+        RECT 0.000 7.000 80.000 32.500 ;
+    END
+    PORT
+      LAYER TopMetal2 ;
+        RECT 0.000 127.500 80.000 132.500 ;
+    END
+    PORT
+      LAYER TopMetal2 ;
+        RECT 0.000 8.500 80.000 31.000 ;
+    END
+    PORT
+      LAYER TopMetal2 ;
+        RECT 0.000 36.000 80.000 58.500 ;
+    END
+  END iovss
+  OBS
+      LAYER GatPoly ;
+        RECT 0.000 6.000 80.000 179.895 ;
+      LAYER Metal1 ;
+        RECT 0.000 6.000 80.000 180.000 ;
+      LAYER Metal2 ;
+        RECT 0.210 177.880 18.120 180.000 ;
+        RECT 18.830 177.880 21.170 180.000 ;
+        RECT 0.210 173.835 21.170 177.880 ;
+        RECT 21.880 173.835 59.620 180.000 ;
+        RECT 0.210 157.600 59.620 173.835 ;
+        RECT 60.330 157.600 79.790 180.000 ;
+        RECT 0.210 3.210 79.790 157.600 ;
+        RECT 0.210 3.000 4.790 3.210 ;
+        RECT 75.210 3.000 79.790 3.210 ;
+      LAYER Metal3 ;
+        RECT 28.575 60.210 49.915 65.790 ;
+        RECT 28.575 32.710 49.915 34.290 ;
+        RECT 28.575 6.090 49.915 6.790 ;
+      LAYER Metal4 ;
+        RECT 1.000 156.010 79.000 161.990 ;
+  END
+END hm_IOPadInOut30mA_OpenDrain_PUPD
+END LIBRARY
+
