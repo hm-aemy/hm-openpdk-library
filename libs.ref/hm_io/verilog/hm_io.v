@@ -1,6 +1,5 @@
 `timescale 1ns/10ps
 `celldefine
-/// sta-blackbox
 module hm_IOPadInOut30mA_OpenDrain_PUPD (iovdd, iovss, vdd, vss, pad, c2p, c2p_en, p2c, otype, pu, pd);
 	inout iovdd;
 	inout iovss;
