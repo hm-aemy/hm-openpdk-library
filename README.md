@@ -17,8 +17,17 @@ Open-source custom cells and auxiliary design files used by the HM AEMY group fo
 ## Getting started
 
 Clone the repository:
-
+```
 git clone https://github.com/hm-aemy/hm-openpdk-library.git
+```
+Define the PDK:
+```
+export PDK=ihp-sg13g2 #or sg13cmos5l
+```
+Setup the environment:
+```
+source setup.sh
+```
 
 ## Fetching the PDK
 
