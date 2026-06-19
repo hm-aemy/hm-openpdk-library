@@ -22,7 +22,7 @@ git clone https://github.com/hm-aemy/hm-openpdk-library.git
 ```
 Define the PDK:
 ```
-export PDK=ihp-sg13g2 #or sg13cmos5l
+export PDK=ihp-sg13g2 #or ihp-sg13cmos5l
 ```
 Setup the environment:
 ```
@@ -31,18 +31,12 @@ source setup.sh
 
 ## Fetching the PDK
 
-The repository includes a Makefile to clone the required IHP PDK version.
+The repository includes a Makefile to clone the required PDK version.
 
-By default, the Makefile uses ihp-sg13g2:
+Makefile uses the PDK that was setup on the previous step:
 ```
 make clone-pdk
 ```
-To clone the ihp-sg13cmos5l setup:
-```
-make clone-pdk PDK=ihp-sg13cmos5l
-```
-This will clone the base IHP Open PDK and then fetch the ihp-sg13cmos5l repository inside the local pdk/ directory.
-
 To remove the cloned PDK:
 ```
 make clean
