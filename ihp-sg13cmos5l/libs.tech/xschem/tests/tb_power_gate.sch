@@ -24,7 +24,7 @@ N 250 0 250 20 {
 lab=vdd_dut}
 N 230 0 250 0 {
 lab=vdd_dut}
-C {/home/designer/shared/hm-openpdk-library/ihp-sg13cmos5l/libs.tech/xschem/hm_analog/power_gate.sym} 20 0 0 0 {name=x1}
+C {hm_analog/power_gate.sym} 20 0 0 0 {name=x1}
 C {devices/code.sym} -260 -240 0 0 {name=TT_MODELS
 only_toplevel=true
 format="tcleval( @value )"

@@ -69,4 +69,4 @@ model=sg13_lv_pmos
 spiceprefix=X
 }
 C {lab_pin.sym} 160 -50 0 0 {name=p5 sig_type=std_logic lab=ctrl_n}
-C {/home/designer/shared/hm-openpdk-library/ihp-sg13cmos5l/libs.tech/xschem/hm_analog/dischg.sym} 310 10 0 0 {name=x1}
+C {hm_analog/dischg.sym} 310 10 0 0 {name=x1}
