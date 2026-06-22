@@ -38,15 +38,24 @@ value="
 *.lib cornerCAP.lib cap_typ
 "
 spice_ignore=false}
-C {devices/code.sym} -430 -240 0 0 {name=SIMULATION
+C {devices/code.sym} -440 -250 0 0 {name=SIMULATION
 only_toplevel=false 
 value="
 .param Rload=1000
 
 .control
 
+let npoints = 8
+let rvec = vector(npoints)
+let ivec = vector(npoints)
+let vdrop_vec = vector(npoints)
+let ron_vec = vector(npoints)
 
-foreach r 10000 5000 2000 1000 500 200 100 10 1
+let vdd_dutvec = vector(npoints)
+
+let idx=0
+
+foreach r 10000 5000 2000 1000 500 200 100 10
   alterparam Rload=$r
   reset
   save all
@@ -56,10 +65,22 @@ foreach r 10000 5000 2000 1000 500 200 100 10 1
   let vdrop = v(vdd) - v(vdd_dut)
   let ron = vdrop/iload
 
+  let rvec[idx] = $r
+  let ivec[idx] = iload
+  let vdrop_vec[idx] = vdrop
+  let ron_vec[idx] = ron
+
+  let vdd_dutvec[idx] = vdd_dut
+
   echo -------------------------
   echo Rload = $r
   print iload vdrop ron
+
+  let idx = idx + 1
 end
+
+plot ron_vec vs ivec
+plot vdd_dutvec vs ivec
 
 .endc
 "}
