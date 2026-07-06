@@ -1,7 +1,7 @@
 import gdsfactory as gf
 from gdsfactory import Component
 from ihp import PDK, tech
-from ihp.cells import nmos, pmos_no_contacts
+from ihp.cells import nmos, pmos
 from ihp.cells2 import via_stack
 
 PDK.activate()
@@ -61,7 +61,7 @@ def power_lv_pmos(
 
     c = Component("power_lv_pmos")
     
-    m = c.add_ref(pmos_no_contacts(width=width, length=length, nf=nf))
+    m = c.add_ref(pmos(width=width, length=length, nf=nf))
 
     gate_first_center = m.ports["G1"].center
     gate_last_center = m.ports["G"+str(nf)].center
