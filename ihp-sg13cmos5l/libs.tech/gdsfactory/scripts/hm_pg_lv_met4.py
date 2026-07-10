@@ -19,10 +19,11 @@ def power_gate_met4(
     gpwr_ext=5,
 
     power_inner_sep=10,
+
+    met4_sep=2
 ) -> Component:
     c = Component("power_gate_met4")
 
-    met4_sep = 2
     power_ext = power_sep-gnd_ext-met4_sep
 
     if power_sep > (power_inner_sep+met4_sep+gpwr_ext):
@@ -94,5 +95,6 @@ def power_gate_met4(
 
     return c
 
-top = power_gate_met4()
-top.write_gds("hm_pg_lv_met4.gds")
+if __name__ == "__main__":
+    top = power_gate_met4()
+    top.write_gds("hm_pg_lv_met4.gds")

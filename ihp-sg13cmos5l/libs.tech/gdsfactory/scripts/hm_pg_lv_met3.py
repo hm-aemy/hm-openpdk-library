@@ -13,23 +13,33 @@ def power_gate_met3(
     gpwr_wing_width=10,
 
     gnd_wing_ext=30,
-    wing_ext=3
+    wing_ext=2,
+
+    met3_sep=1
 ) -> Component:
     c = Component("power_gate_met3")
 
-    met3_sep = 2
     gnd_ext_sep = (heigth/2-(gnd_wing_ext+gnd_wing_width/2))
-    
+   
+    # Met3 base
     c.add_polygon(
         [
             (wing_ext+met3_sep, 0),
             (width, 0),
+            (width, heigth/2-gnd_wing_width/2-met3_sep),
+            (width-wing_ext-met3_sep, heigth/2-gnd_wing_width/2-met3_sep),
+            (width-wing_ext-met3_sep, heigth/2+gnd_wing_width/2+met3_sep),
+            (width, heigth/2+gnd_wing_width/2+met3_sep),
             (width, heigth),
             (wing_ext+met3_sep, heigth),
             (wing_ext+met3_sep, heigth/2+gnd_wing_ext+gnd_wing_width/2),
             (0, heigth/2+gnd_wing_ext+gnd_wing_width/2),
             (0, heigth/2+gnd_wing_ext-gnd_wing_width/2),
             (wing_ext+met3_sep, heigth/2+gnd_wing_ext-gnd_wing_width/2),
+            (wing_ext+met3_sep, heigth/2+gnd_wing_width/2),
+            (0, heigth/2+gnd_wing_width/2),
+            (0, heigth/2-gnd_wing_width/2),
+            (wing_ext+met3_sep, heigth/2-gnd_wing_width/2),
             (wing_ext+met3_sep, heigth/2-gnd_wing_ext+gnd_wing_width/2),
             (0, heigth/2-gnd_wing_ext+gnd_wing_width/2),
             (0, heigth/2-gnd_wing_ext-gnd_wing_width/2),
@@ -37,13 +47,14 @@ def power_gate_met3(
         ],
         layer="Metal3drawing"
     )
-
+    
+    # met3 VPWR
     c.add_polygon(
         [
-            (0, heigth/2-gnd_wing_width/2),
-            (wing_ext, heigth/2-gnd_wing_width/2),
-            (wing_ext, heigth/2+gnd_wing_width/2),
-            (0, heigth/2+gnd_wing_width/2),
+            (width-wing_ext, heigth/2-gnd_wing_width/2),
+            (width, heigth/2-gnd_wing_width/2),
+            (width, heigth/2+gnd_wing_width/2),
+            (width-wing_ext, heigth/2+gnd_wing_width/2),
         ],
         layer="Metal3drawing"
     )
@@ -90,5 +101,6 @@ def power_gate_met3(
 
     return c
 
-top = power_gate_met3()
-top.write_gds("hm_pg_lv_met3.gds")
+if __name__ == "__main__":
+    top = power_gate_met3()
+    top.write_gds("hm_pg_lv_met3.gds")
