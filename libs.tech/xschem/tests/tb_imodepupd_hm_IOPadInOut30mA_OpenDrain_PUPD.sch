@@ -1,8 +1,9 @@
-v {xschem version=3.4.6 file_version=1.2}
+v {xschem version=3.4.8RC file_version=1.3}
 G {}
 K {}
 V {}
 S {}
+F {}
 E {}
 N -240 -210 -240 -190 {lab=vdd}
 N -200 -200 -200 -190 {lab=iovdd}
@@ -90,5 +91,5 @@ plot pu_mid
 "}
 C {lab_pin.sym} -340 -90 0 0 {name=p8 sig_type=std_logic lab=pu}
 C {lab_pin.sym} -340 -70 0 0 {name=p9 sig_type=std_logic lab=pd}
-C {/home/designer/shared/hm-openpdk-library/libs.tech/xschem/hm_io/hm_IOPadInOut30mA_OpenDrain_PUPD.sym} -220 -130 0 0 {name=x1}
+C {hm_io/hm_IOPadInOut30mA_OpenDrain_PUPD.sym} -220 -130 0 0 {name=x1}
 C {lab_pin.sym} -340 -170 0 0 {name=p15 sig_type=std_logic lab=p2c}

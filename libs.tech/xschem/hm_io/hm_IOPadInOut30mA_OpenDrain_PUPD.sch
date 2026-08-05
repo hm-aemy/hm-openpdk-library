@@ -1,8 +1,9 @@
-v {xschem version=3.4.6 file_version=1.2}
+v {xschem version=3.4.8RC file_version=1.3}
 G {}
 K {}
 V {}
 S {}
+F {}
 E {}
 N -260 240 -240 240 {lab=!}
 N 110 240 130 240 {lab=!}
@@ -58,7 +59,7 @@ N -340 -160 -280 -160 {lab=vdd}
 N -270 -180 -270 -80 {lab=iovdd1}
 N -340 -180 -270 -180 {lab=iovdd1}
 N 20 100 110 100 {lab=!}
-N -340 -50 -320 -50 {lab=c2p}
+N -340 -50 -320 -50 {lab=c2p_en}
 N -340 -40 -340 -30 {lab=c2p_en}
 N -340 -40 -320 -40 {lab=c2p_en}
 N -240 -50 -60 -50 {lab=#net1}
@@ -108,6 +109,7 @@ N 490 0 490 100 {lab=!}
 N 340 100 490 100 {lab=!}
 N 300 120 510 120 {lab=vss}
 N 510 -0 510 120 {lab=vss}
+N -320 -50 -320 -40 {lab=c2p_en}
 C {iopin.sym} -340 -180 0 1 {name=p9 lab=iovdd1
 }
 C {iopin.sym} -340 120 0 1 {name=p10 lab=vss
@@ -149,13 +151,13 @@ C {iopin.sym} -340 40 0 1 {name=p6 lab=p2c
 }
 C {iopin.sym} -340 0 0 1 {name=p7 lab=otype
 }
-C {/home/designer/shared/hm-openpdk-library/libs.tech/xschem/hm_stdcells/hm_GateDecode_OpenDrain_noptap.sym} -280 -40 0 0 {name=x3}
+C {hm_stdcells/hm_GateDecode_OpenDrain_noptap.sym} -280 -40 0 0 {name=x3}
 C {lab_pin.sym} 400 -60 1 0 {name=p30 sig_type=std_logic lab=pu_en}
 C {lab_pin.sym} 400 -20 3 0 {name=p31 sig_type=std_logic lab=pd_en}
-C {/home/designer/shared/hm-openpdk-library/libs.tech/xschem/hm_stdcells/hm_PUPD_decoder.sym} 320 -40 0 0 {name=x8}
+C {hm_stdcells/hm_PUPD_decoder.sym} 320 -40 0 0 {name=x8}
 C {iopin.sym} 240 -60 0 1 {name=p8 lab=pu
 }
 C {iopin.sym} 240 -20 0 1 {name=p11 lab=pd
 }
-C {/home/designer/shared/hm-openpdk-library/libs.tech/xschem/hm_stdcells/hm_PUPD_noptap.sym} 490 -40 0 0 {name=x7}
+C {hm_stdcells/hm_PUPD_noptap.sym} 490 -40 0 0 {name=x7}
 C {lab_pin.sym} -130 -40 2 0 {name=p12 sig_type=std_logic lab=ngate}

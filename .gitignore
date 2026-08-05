@@ -1,3 +1,8 @@
 libs.tech/xschem/simulations/*
 libs.tech/gds/lvs_*
 libs.tech/gds/drc_*
+ihp-sg13cmos5l/libs.tech/xschem/simulations/*
+ihp-sg13cmos5l/libs.ref/hm_io/gds/lvs_run_**
+ihp-sg13cmos5l/libs.ref/hm_io/gds/drc_run_**
+ihp-sg13cmos5l/libs.ref/hm_io/gds/backups/
+
