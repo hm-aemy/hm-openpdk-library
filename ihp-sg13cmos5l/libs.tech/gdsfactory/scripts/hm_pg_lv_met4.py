@@ -18,7 +18,7 @@ def power_gate_met4(
     gnd_ext=2,
     gpwr_ext=5,
 
-    power_inner_sep=10,
+    power_inner_sep=10.0,
 
     met4_sep=2
 ) -> Component:
@@ -45,6 +45,20 @@ def power_gate_met4(
         ],
         layer="Metal4drawing"
     )
+    c.add_port(
+        name="VPWR_0",
+        center=(gnd_size/2, (power_ext_sep+power_width+power_ext)/2),
+        width=power_ext_sep+power_width+power_ext,
+        orientation=0,
+        layer="Metal3pin"
+    )
+    c.add_port(
+        name="VPWR_1",
+        center=(gnd_size/2, (vpwr_heigth+power_ext_sep+power_width+power_sep+gnd_width+gnd_ext+met4_sep)/2),
+        width=vpwr_heigth-(power_ext_sep+power_width+power_sep+gnd_width+gnd_ext+met4_sep),
+        orientation=0,
+        layer="Metal3pin"
+    )
 
     c.add_polygon(
         [
@@ -54,6 +68,13 @@ def power_gate_met4(
             (0, power_ext_sep+power_width+power_ext+met4_sep+gnd_width+2*gnd_ext),
         ],
         layer="Metal4drawing"
+    )
+    c.add_port(
+        name="GND_0",
+        center=(gnd_size/2, (power_ext_sep+power_width+power_ext+met4_sep+power_ext_sep+power_width+power_ext+met4_sep+gnd_width+2*gnd_ext)/2),
+        width=power_ext_sep+power_width+power_ext+met4_sep+gnd_width+2*gnd_ext-(power_ext_sep+power_width+power_ext+met4_sep),
+        orientation=0,
+        layer="Metal3pin"
     )
 
     gpwr_y0 = vpwr_heigth+met4_sep
@@ -82,6 +103,20 @@ def power_gate_met4(
         ],
         layer="Metal4drawing"
     )
+    c.add_port(
+        name="VPWR_2",
+        center=(gnd_size/2, (vpwr_top_y0+ vpwr_top_y0+power_inner_sep+power_width+power_ext)/2),
+        width=vpwr_top_y0+power_inner_sep+power_width+power_ext-vpwr_top_y0,
+        orientation=0,
+        layer="Metal3pin"
+    )
+    c.add_port(
+        name="VPWR_3",
+        center=(gnd_size/2, (vpwr_heigth+vpwr_top_y0+vpwr_top_y0+power_inner_sep+power_width+power_sep+gnd_width+gnd_ext+met4_sep)/2),
+        width=vpwr_heigth+vpwr_top_y0-(vpwr_top_y0+power_inner_sep+power_width+power_sep+gnd_width+gnd_ext+met4_sep),
+        orientation=0,
+        layer="Metal3pin"
+    )
 
     c.add_polygon(
         [
@@ -92,6 +127,7 @@ def power_gate_met4(
         ],
         layer="Metal4drawing"
     )
+
 
     return c
 
