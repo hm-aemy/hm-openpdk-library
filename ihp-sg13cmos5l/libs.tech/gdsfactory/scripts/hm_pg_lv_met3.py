@@ -12,10 +12,12 @@ def power_gate_met3(
     vpwr_wing_width=10,
     gpwr_wing_width=10,
 
-    gnd_wing_ext=30,
+    gnd_wing_ext=30.0,
     wing_ext=2,
+    gpwr_wing_ext=4.0,
+    gpwr_ext=5,
 
-    met3_sep=1
+    met3_sep=1.0
 ) -> Component:
     c = Component("power_gate_met3")
 
@@ -26,20 +28,20 @@ def power_gate_met3(
         [
             (wing_ext+met3_sep, 0),
             (width, 0),
-            (width, heigth/2-gnd_wing_width/2-met3_sep),
-            (width-wing_ext-met3_sep, heigth/2-gnd_wing_width/2-met3_sep),
-            (width-wing_ext-met3_sep, heigth/2+gnd_wing_width/2+met3_sep),
-            (width, heigth/2+gnd_wing_width/2+met3_sep),
+            (width, heigth/2-gpwr_wing_width/2-met3_sep),
+            (width-met3_sep-gpwr_wing_ext, heigth/2-gpwr_wing_width/2-met3_sep),
+            (width-met3_sep-gpwr_wing_ext, heigth/2+gpwr_wing_width/2+met3_sep),
+            (width, heigth/2+gpwr_wing_width/2+met3_sep),
             (width, heigth),
             (wing_ext+met3_sep, heigth),
             (wing_ext+met3_sep, heigth/2+gnd_wing_ext+gnd_wing_width/2),
             (0, heigth/2+gnd_wing_ext+gnd_wing_width/2),
             (0, heigth/2+gnd_wing_ext-gnd_wing_width/2),
             (wing_ext+met3_sep, heigth/2+gnd_wing_ext-gnd_wing_width/2),
-            (wing_ext+met3_sep, heigth/2+gnd_wing_width/2),
-            (0, heigth/2+gnd_wing_width/2),
-            (0, heigth/2-gnd_wing_width/2),
-            (wing_ext+met3_sep, heigth/2-gnd_wing_width/2),
+            (wing_ext+met3_sep, heigth/2+gpwr_wing_width/2+gpwr_ext),
+            (0, heigth/2+gpwr_wing_width/2+gpwr_ext),
+            (0, heigth/2-gpwr_wing_width/2-gpwr_ext),
+            (wing_ext+met3_sep, heigth/2-gpwr_wing_width/2-gpwr_ext),
             (wing_ext+met3_sep, heigth/2-gnd_wing_ext+gnd_wing_width/2),
             (0, heigth/2-gnd_wing_ext+gnd_wing_width/2),
             (0, heigth/2-gnd_wing_ext-gnd_wing_width/2),
@@ -51,12 +53,19 @@ def power_gate_met3(
     # met3 VPWR
     c.add_polygon(
         [
-            (width-wing_ext, heigth/2-gnd_wing_width/2),
-            (width, heigth/2-gnd_wing_width/2),
-            (width, heigth/2+gnd_wing_width/2),
-            (width-wing_ext, heigth/2+gnd_wing_width/2),
+            (width-gpwr_wing_ext, heigth/2-gpwr_wing_width/2),
+            (width, heigth/2-gpwr_wing_width/2),
+            (width, heigth/2+gpwr_wing_width/2),
+            (width-gpwr_wing_ext, heigth/2+gpwr_wing_width/2),
         ],
         layer="Metal3drawing"
+    )
+    c.add_port(
+        name="GPWR",
+        center=((2*width-gpwr_wing_ext)/2, heigth/2),
+        width=heigth/2+gpwr_wing_width/2-(heigth/2-gpwr_wing_width/2),
+        orientation=0,
+        layer="Metal3pin"
     )
 
     c.add_polygon(
@@ -69,14 +78,29 @@ def power_gate_met3(
         layer="Metal3drawing"
     )
 
+    c.add_port(
+        name="VPWR_0",
+        center=(wing_ext/2, (gnd_ext_sep-met3_sep)/2),
+        width=gnd_ext_sep-met3_sep,
+        orientation=0,
+        layer="Metal3pin"
+    )
+
     c.add_polygon(
         [
             (0, gnd_ext_sep+gnd_wing_width+met3_sep),
             (wing_ext, gnd_ext_sep+gnd_wing_width+met3_sep),
-            (wing_ext, heigth/2-gpwr_wing_width/2-met3_sep),
-            (0, heigth/2-gpwr_wing_width/2-met3_sep),
+            (wing_ext, heigth/2-gpwr_wing_width/2-met3_sep-gpwr_ext),
+            (0, heigth/2-gpwr_wing_width/2-met3_sep-gpwr_ext),
         ],
         layer="Metal3drawing"
+    )
+    c.add_port(
+        name="VPWR_1",
+        center=(wing_ext/2, (gnd_ext_sep+gnd_wing_width+met3_sep+heigth/2-gpwr_wing_width/2-met3_sep-gpwr_ext)/2),
+        width=heigth/2-gpwr_wing_width/2-met3_sep-gpwr_ext-(gnd_ext_sep+gnd_wing_width+met3_sep),
+        orientation=0,
+        layer="Metal3pin"
     )
 
     c.add_polygon(
@@ -88,16 +112,31 @@ def power_gate_met3(
         ],
         layer="Metal3drawing"
     )
+    c.add_port(
+        name="VPWR_3",
+        center=(wing_ext/2, (heigth/2+gnd_wing_ext+gnd_wing_width/2+met3_sep+heigth)/2),
+        width=heigth-(heigth/2+gnd_wing_ext+gnd_wing_width/2+met3_sep),
+        orientation=0,
+        layer="Metal3pin"
+    )
 
     c.add_polygon(
         [
-            (0, heigth/2+gpwr_wing_width/2+met3_sep),
-            (wing_ext, heigth/2+gpwr_wing_width/2+met3_sep),
+            (0, heigth/2+gpwr_wing_width/2+met3_sep+gpwr_ext),
+            (wing_ext, heigth/2+gpwr_wing_width/2+met3_sep+gpwr_ext),
             (wing_ext, heigth/2+gnd_wing_ext-gnd_wing_width/2-met3_sep),
             (0, heigth/2+gnd_wing_ext-gnd_wing_width/2-met3_sep),
         ],
         layer="Metal3drawing"
     )
+    c.add_port(
+        name="VPWR_2",
+        center=(wing_ext/2, (heigth/2+gpwr_wing_width/2+met3_sep+gpwr_ext+heigth/2+gnd_wing_ext-gnd_wing_width/2-met3_sep)/2),
+        width=heigth/2+gnd_wing_ext-gnd_wing_width/2-met3_sep-(heigth/2+gpwr_wing_width/2+met3_sep+gpwr_ext),
+        orientation=0,
+        layer="Metal3pin"
+    )
+
 
     return c
 
