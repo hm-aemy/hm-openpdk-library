@@ -2,3 +2,5 @@ libs.tech/gds/lvs_*
 libs.tech/gds/drc_*
 pdk
 **/libs.tech/xschem/simulations/*
+**/__pycache__/*
+**/backups/*

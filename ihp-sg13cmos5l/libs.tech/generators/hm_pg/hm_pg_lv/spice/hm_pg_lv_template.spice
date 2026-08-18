@@ -1,0 +1,17 @@
+XM1 ctrl_n ctrl VGND VGND sg13_lv_nmos w=2.6u l=0.13u ng=1 m=1 mm_ok=1
+XM2 ctrl_n ctrl VPWR VPWR sg13_lv_pmos w=4.44u l=0.13u ng=1 m=1 mm_ok=1
+XM3 GPWR ctrl_n VPWR VPWR sg13_lv_pmos w={width} l={length} ng={ng} m={m} mm_ok=1
+x1 VGND GPWR ctrl_n dischg
+
+.subckt dischg VGND GPWR gate
+XM1 GPWR gate net1 VGND sg13_lv_nmos w=0.50u l=0.65u ng=1 m=1 mm_ok=1
+XM2 net1 gate net2 VGND sg13_lv_nmos w=0.50u l=0.65u ng=1 m=1 mm_ok=1
+XM3 net2 gate net3 VGND sg13_lv_nmos w=0.50u l=0.65u ng=1 m=1 mm_ok=1
+XM4 net3 gate VGND VGND sg13_lv_nmos w=0.50u l=0.65u ng=1 m=1 mm_ok=1
+XM5 GPWR gate net6 VGND sg13_lv_nmos w=0.50u l=0.65u ng=1 m=1 mm_ok=1
+XM6 net6 gate net5 VGND sg13_lv_nmos w=0.50u l=0.65u ng=1 m=1 mm_ok=1
+XM7 net5 gate net4 VGND sg13_lv_nmos w=0.50u l=0.65u ng=1 m=1 mm_ok=1
+XM8 net4 gate VGND VGND sg13_lv_nmos w=0.50u l=0.65u ng=1 m=1 mm_ok=1
+.ends
+
+.end
