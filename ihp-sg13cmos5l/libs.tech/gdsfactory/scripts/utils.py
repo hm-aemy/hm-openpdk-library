@@ -1,7 +1,7 @@
 import gdsfactory as gf
 from gdsfactory import Component
 from ihp import PDK, tech
-from ihp.cells2 import via_stack
+from ihp.cells import via_stack
 from ihp.cells import place_contacts
 
 def populate_via_stack(c, column_width=10.0, row_width=10.0, center=[0,0], bottom_layer="Metal1", top_layer="Metal2"):
@@ -18,7 +18,7 @@ def populate_via_stack(c, column_width=10.0, row_width=10.0, center=[0,0], botto
     row_num_float = (row_width-via1_enc+via1_spacing)/(via1_size+via1_spacing)
     row_num_int = int(row_num_float)
 
-    via_stack1 = c.add_ref(via_stack(bottom_layer=bottom_layer, top_layer=top_layer, vn_columns=row_num_int, vn_rows=column_num_int))
+    via_stack1 = c.add_ref(via_stack(bottom_layer=bottom_layer, top_layer=top_layer, vn_columns=row_num_int, vn_rows=column_num_int, size=(row_width, column_width)))
     via_stack1.x=center[0]
     via_stack1.y=center[1]
 

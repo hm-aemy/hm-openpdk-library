@@ -2,21 +2,21 @@ import gdsfactory as gf
 from gdsfactory import Component
 from ihp import PDK, tech
 from ihp.cells import nmos, pmos, guard_ring
-from ihp.cells2 import via_stack
+from ihp.cells import via_stack
 
 PDK.activate()
 
-def populate_via_stack(c, column_width=10, row_width=10, center=[0,0]):
+def populate_via_stack(c, column_width=10, row_width=0.32, center=[0,0]):
     
     via1_size = tech.TECH.via1_size_rf
-    via1_spacing = tech.TECH.via1_spacing_wide
+    via1_spacing = tech.TECH.via1_spacing_narrow
     via1_enc = tech.TECH.via1_enc
 
     column_num_float = (column_width-via1_enc+via1_spacing)/(via1_size+via1_spacing)
     column_num_int = int(column_num_float)
     column_num_dec = column_num_float-column_num_int
 
-    via_stack1 = c.add_ref(via_stack(bottom_layer="Metal1", top_layer="Metal2", vn_columns=1, vn_rows=column_num_int))
+    via_stack1 = c.add_ref(via_stack(bottom_layer="Metal1", top_layer="Metal2", vn_columns=1, vn_rows=column_num_int, size=(row_width, column_width)))
     via_stack1.x=center[0]
     via_stack1.y=center[1]
 
@@ -166,6 +166,14 @@ def power_lv_pmos(
         name="D",
         center=((d_first_center[0]+d_last_center[0])/2, d_first_center[1]+nf_width/4),
         width=d_last_center[0]-d_first_center[0],
+        orientation=180,
+        layer="Metal2pin",
+        port_type="electrical"
+    )
+    c.add_port(
+        name="S",
+        center=((s_first_center[0]+s_last_center[0])/2, s_first_center[1]+nf_width/4),
+        width=s_last_center[0]-s_first_center[0],
         orientation=180,
         layer="Metal2pin",
         port_type="electrical"

@@ -1,8 +1,9 @@
-v {xschem version=3.4.6 file_version=1.2}
+v {xschem version=3.4.8RC file_version=1.3}
 G {}
 K {}
 V {}
 S {}
+F {}
 E {}
 N -560 -240 -560 -230 {
 lab=vdd}
@@ -110,4 +111,4 @@ value=\{Rload\}
 footprint=1206
 device=resistor
 m=1}
-C {/home/designer/shared/hm-openpdk-library/ihp-sg13cmos5l/libs.tech/xschem/hm_analog/hm_pg_lv.sym} 20 0 0 0 {name=x1}
+C {hm_analog/hm_pg_lv.sym} 20 0 0 0 {name=x1}

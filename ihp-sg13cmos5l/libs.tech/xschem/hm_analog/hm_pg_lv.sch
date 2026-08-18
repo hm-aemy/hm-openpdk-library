@@ -1,8 +1,9 @@
-v {xschem version=3.4.6 file_version=1.2}
+v {xschem version=3.4.8RC file_version=1.3}
 G {}
 K {}
 V {}
 S {}
+F {}
 E {}
 N 0 0 -0 30 {lab=ctrl_n}
 N 0 -60 20 -60 {lab=VPWR}
@@ -61,9 +62,9 @@ spiceprefix=X
 }
 C {sg13cmos5l_pr/sg13_lv_pmos.sym} 160 -100 3 0 {name=M3
 l=0.13u
-w=2175u
-ng=290
-m=1
+w=2618u
+ng=374
+m=2
 mm_ok=1
 model=sg13_lv_pmos
 spiceprefix=X

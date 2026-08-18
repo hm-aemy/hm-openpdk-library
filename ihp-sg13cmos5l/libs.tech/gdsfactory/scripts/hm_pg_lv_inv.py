@@ -18,6 +18,7 @@ def inverter(
     input_ext = 0.5
     output_ext = 0.5
     metal_width = 0.16
+    input_width = 0.3
 
     n = c.add_ref(nmos(width=width_n, length=length, nf=1))
     p = c.add_ref(pmos(width=width_p, length=length, nf=1))
@@ -72,7 +73,7 @@ def inverter(
     gate_n = n.ports["G"]
     gate_p = p.ports["G"]
     gate_y = (gate_n.center[1] - width_p/2 + gate_p.center[1] + width_n/2) / 2
-    input_x = gate_n.center[0] - input_ext
+    input_x = gate_n.center[0] + input_ext
 
     c.add_polygon(
         [
@@ -86,10 +87,10 @@ def inverter(
 
     c.add_polygon(
         [
-            (input_x, gate_y - metal_width/2),
-            (gate_n.center[0], gate_y - metal_width/2),
-            (gate_n.center[0], gate_y + metal_width/2),
-            (input_x, gate_y + metal_width/2),
+            (input_x, gate_y - input_width/2),
+            (gate_n.center[0], gate_y - input_width/2),
+            (gate_n.center[0], gate_y + input_width/2),
+            (input_x, gate_y + input_width/2),
         ],
         layer="Metal1drawing"
     )
@@ -164,7 +165,6 @@ def inverter(
     #    ],
     #    layer="Metal1drawing"
     #)
-
     c.add_port(
         name="IN",
         center=(input_x, gate_y),
