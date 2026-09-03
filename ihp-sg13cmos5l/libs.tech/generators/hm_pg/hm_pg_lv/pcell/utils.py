@@ -3,6 +3,10 @@ from gdsfactory import Component
 from ihp import PDK, tech
 from ihp.cells import via_stack
 from ihp.cells import place_contacts
+import math
+
+def floor_to_resolution(value: float, resolution: float = 0.005) -> float:
+    return math.floor(value / resolution) * resolution
 
 def populate_via_stack(c, column_width=10.0, row_width=10.0, center=[0,0], bottom_layer="Metal1", top_layer="Metal2"):
 

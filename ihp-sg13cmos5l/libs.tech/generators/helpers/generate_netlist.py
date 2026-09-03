@@ -1,7 +1,7 @@
 import argparse
 import json
 from pathlib import Path
-
+import re
 
 def main():
     parser = argparse.ArgumentParser(
@@ -38,15 +38,18 @@ def main():
     with args.params.open() as f:
         params = json.load(f)
 
-    # Replace template parameters
-    try:
-        netlist = template.format_map(params)
-    except KeyError as error:
-        missing_parameter = error.args[0]
-        raise ValueError(
-            f"Parameter '{missing_parameter}' is required by the template "
-            f"but was not found in {args.params}"
-        ) from error
+    def replace_parameter(match):
+        parameter = match.group(1)
+
+        if parameter not in params:
+            raise ValueError(
+                f"Parameter '{parameter}' is required by the template "
+                f"but was not found in {args.params}"
+            )
+
+        return str(params[parameter])
+
+    netlist = re.sub(r"\{\{(\w+)\}\}", replace_parameter, template)
 
     # Create output directory if necessary
     args.output.parent.mkdir(parents=True, exist_ok=True)

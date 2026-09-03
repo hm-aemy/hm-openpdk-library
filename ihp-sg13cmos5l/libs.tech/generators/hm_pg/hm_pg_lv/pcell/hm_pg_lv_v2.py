@@ -12,7 +12,7 @@ from hm_pg_lv_inv import inverter
 from hm_pg_lv_met3_v2 import hm_pg_lv_met3
 from hm_pg_lv_met4_v2 import hm_pg_lv_met4
 
-from utils import populate_via_stack, populate_contact
+from utils import populate_via_stack, populate_contact, floor_to_resolution
 from ihp.cells import via_stack
 
 PDK.activate()
@@ -37,14 +37,14 @@ def hm_pg_lv(
 ) -> Component:
     c = Component(f"hm_pg_lv_{width}x{height}")
     invInConnL = 0.5
-    invInConnSep =0.3
+    invInConnSep =0.6
 
     ############ Place power pmos ############ 
 
     # the pmos has a left offset of 1.2 and
     # a right offset of 1.2 -> this is parametrized on the power pmos layout.
     # on the future we should take the value from there
-    pmosMaxWf=width-(2.4)
+    pmosMaxWf=width-(2.52)
     if pmosMaxWf>10:
         pmosMaxWf=pmosMaxWf-0.6 #TODO: Make it relative, is the separation between transistors of 2 rows.
 
@@ -63,11 +63,13 @@ def hm_pg_lv(
     pmosMaxnf=int((pmosMaxHeighteff-2*endFingerTransWidth+internalFingerTransWidth)/(internalFingerTransWidth+pmosL))
     pmosWidth=int(pmosMaxnf*pmosMaxWf)
     print("Pmos Width: ", pmosWidth)
+    print("Pmos Wf: ", pmosWidth/pmosMaxnf)
     print("Pmos Length: ", pmosL)
     print("Pmos nf: ", pmosMaxnf)
 
+    pmosWidthOnGrid = floor_to_resolution((pmosWidth/2)/pmosMaxnf, 0.1)*pmosMaxnf*2
     power_pmos_ref = c.add_ref(
-        power_lv_pmos(width=pmosWidth, length=pmosL, nf=pmosMaxnf, sd_sep=pmosSDsep)
+        power_lv_pmos(width=pmosWidthOnGrid, length=pmosL, nf=pmosMaxnf, sd_sep=pmosSDsep)
     ).rotate(270)
     power_pmos_ref.dymin = 0
     power_pmos_ref.dxmin = 0
@@ -155,7 +157,6 @@ def hm_pg_lv(
     #inverter VDD connection
     invVDDPort = inverter_ref.ports["VDD"]
     invVDDPortCenter = invVDDPort.center
-    invInConnSep =0.3
     invVDDPortWidth = invVDDPort.width
     invVDDConnWidth = 0.32
 
@@ -361,7 +362,7 @@ def hm_pg_lv(
 
     populate_via_stack(
         c,
-        column_width=dischDrainPort_width+0.2,
+        column_width=dischDrainPort_width,
         row_width=0.6,
         center=dischDrainPort_center,
         bottom_layer="Metal1",
@@ -375,7 +376,7 @@ def hm_pg_lv(
     #    bottom_layer="Metal1",
     #    top_layer="Metal2"
     #)
-    dischDrainConnR = power_pmos_ref.ports["D"].center[0]+power_pmos_ref.cell.info["wf"]/2
+    dischDrainConnR = power_pmos_ref.ports["D"].center[0]+power_pmos_ref.cell.info["wf"]/2-0.03
     dischDrainConnL = power_pmos_ref.ports["D"].center[0]-power_pmos_ref.cell.info["wf"]/2
 
     c.add_polygon(
@@ -480,6 +481,15 @@ def hm_pg_lv(
     c.info["length"] = pmosL
     c.info["m"] = power_pmos_ref.cell.info["m"]
 
+    c.add_polygon(
+        [
+            (c.xmin, c.ymin),
+            (c.xmax, c.ymin),
+            (c.xmax, c.ymax),
+            (c.xmin, c.ymax),
+        ],
+        layer="prBoundaryboundary"
+    )
 
     return c
 
@@ -496,6 +506,7 @@ if __name__ == "__main__":
     output_dir = args.output
 
     top = hm_pg_lv(width=width, height=height)
+    top.flatten()
     top.write_gds(output_dir / f"gds/hm_pg_lv_{width}x{height}.gds")
 
     output_json_path = Path(output_dir / f"json/params_{width}x{height}.json")

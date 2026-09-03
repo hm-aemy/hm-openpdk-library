@@ -2,7 +2,7 @@ import gdsfactory as gf
 from gdsfactory import Component
 from ihp import PDK, tech
 from ihp.cells import nmos, pmos, guard_ring
-from utils import populate_via_stack
+from utils import populate_via_stack, floor_to_resolution
 
 PDK.activate()
    
@@ -23,13 +23,15 @@ def get_sd_ports_even_odd(ref):
 
 @gf.cell
 def power_lv_pmos(
-    width=100,
+    width=100.0,
     length=0.13,
     nf=10,
     sd_sep=0.5
 ) -> Component:
 
     pmosSep=-0.02 #Needed for both psD to meet.
+
+    print("Pmos Actual Width: ", width)
 
     Wf = width/nf
     doubleRow=False
@@ -45,11 +47,16 @@ def power_lv_pmos(
     c = Component("power_lv_pmos")
 
     if doubleRow:
+
+        width_double_row = width/2
+        print("width_double_row: ", width_double_row)
+        wf_double_row = width_double_row/nf
+        print("wf_double_row", width_double_row/nf)
     
-        m1 = c.add_ref(pmos(width=width/2, length=length, nf=nf))
+        m1 = c.add_ref(pmos(width=width_double_row, length=length, nf=nf))
         m1.dymin=0
         m1.dxmin=0
-        m2 = c.add_ref(pmos(width=width/2, length=length, nf=nf))
+        m2 = c.add_ref(pmos(width=width_double_row, length=length, nf=nf))
         m2.dymin=0
         m2.dxmin=0
         m2.movey(m1.ymax+pmosSep) 
@@ -82,6 +89,12 @@ def power_lv_pmos(
                 row_width=0.3,
                 center=p.center,
             )
+
+            print("via_stack column_width: ", p.width)
+            print("via_stack center[1]: ", p.center[1])
+            print("bottom: ", p.center[1]-p.width/2)
+            print("top: ", p.center[1]+p.width/2)
+
             m1W=0.16
             m1S=0.6
             c.add_polygon(
@@ -110,17 +123,17 @@ def power_lv_pmos(
             [
                 (dFirstCenter[0] - sdConnW/2, dFirstCenter[1]-dFirstWidth/2),
                 (dLastCenter[0] + sdConnW/2, dFirstCenter[1]-dFirstWidth/2),
-                (dLastCenter[0] + sdConnW/2, dFirstCenter[1]+dFirstWidth/2),
-                (dFirstCenter[0] - sdConnW/2, dFirstCenter[1]+dFirstWidth/2),
+                (dLastCenter[0] + sdConnW/2, dFirstCenter[1]+dFirstWidth/2-0.06),
+                (dFirstCenter[0] - sdConnW/2, dFirstCenter[1]+dFirstWidth/2-0.06),
             ],
             layer="Metal2drawing"
         )
         for p in m2OddSDPorts:
             populate_via_stack(
                 c,
-                column_width=p.width,
+                column_width=p.width-0.06,
                 row_width=0.3,
-                center=p.center,
+                center=(p.center[0], p.center[1]-0.06/2),
             )
             m1W=0.16
             m1S=0.6
@@ -135,8 +148,8 @@ def power_lv_pmos(
             )
         c.add_port(
             name="D",
-            center=((dFirstCenter[0]+dLastCenter[0])/2, dFirstCenter[1]),
-            width=dLastCenter[0]-dFirstCenter[0],
+            center=((dFirstCenter[0]+dLastCenter[0])/2, dFirstCenter[1]-0.06/2),
+            width=dLastCenter[0]-dFirstCenter[0]-0.06,
             orientation=180,
             layer="Metal2pin",
             port_type="electrical"
@@ -149,10 +162,20 @@ def power_lv_pmos(
     c.add_ref(
         guard_ring(
             width=0.32,
-            guardRingSpacing=0.24,
+            guardRingSpacing=0.3,
             guardRingType="nwell",
             bbox=guard_bbox
         )
+    )
+
+    c.add_polygon(
+        [
+            (guard_bbox[0][0]-0.06, guard_bbox[0][1]-0.06),
+            (guard_bbox[1][0]+0.06, guard_bbox[0][1]-0.06),
+            (guard_bbox[1][0]+0.06, guard_bbox[1][1]+0.06),
+            (guard_bbox[0][0]-0.06, guard_bbox[1][1]+0.06),
+        ],
+        layer="NWelldrawing"
     )
 
     for i in range(len(m)):
@@ -169,6 +192,9 @@ def power_lv_pmos(
             layer="GatPolydrawing"
         )
 
+    print("gateFirstCenter: ", gateFirstCenter)
+    print("Wf/2: ", Wf/2)
+    print("snaped Wf/2: ", floor_to_resolution(Wf/2))
     
     gateFirstCenter = m[1].ports["G1"].center
     gateLastCenter = m[1].ports["G"+str(nf)].center
@@ -185,7 +211,7 @@ def power_lv_pmos(
 
     c.add_port(
         name="GuardRingBottom",
-        center=((c.xmin+c.xmax)/2, c.ymin+0.15+0.24), #TODO: Change for relative values
+        center=((c.xmin+c.xmax)/2, c.ymin+0.15+0.3), #TODO: Change for relative values
         width=c.xmax-c.xmin,
         orientation=180,
         layer="Metal1pin",
@@ -193,7 +219,7 @@ def power_lv_pmos(
     )
     c.add_port(
         name="GuardRingTop",
-        center=((c.xmin+c.xmax)/2, c.ymax-0.15-0.24), #TODO: Change for relative values
+        center=((c.xmin+c.xmax)/2, c.ymax-0.15-0.3), #TODO: Change for relative values
         width=c.xmax-c.xmin,
         orientation=180,
         layer="Metal1pin",
