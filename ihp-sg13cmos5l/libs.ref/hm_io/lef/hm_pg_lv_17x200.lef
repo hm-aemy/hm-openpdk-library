@@ -1,0 +1,55 @@
+VERSION 5.7 ;
+  NOWIREEXTENSIONATPIN ON ;
+  DIVIDERCHAR "/" ;
+  BUSBITCHARS "[]" ;
+MACRO hm_pg_lv_17x200
+  CLASS BLOCK ;
+  FOREIGN hm_pg_lv_17x200 ;
+  ORIGIN 0.000 0.000 ;
+  SIZE 17.000 BY 200.000 ;
+  PIN CTRL
+    DIRECTION INPUT ;
+    USE SIGNAL ;
+    ANTENNAGATEAREA 0.915200 ;
+    PORT
+      LAYER Metal3 ;
+        RECT 0.000 199.500 17.000 200.000 ;
+    END
+  END CTRL
+  PIN VPWR
+    DIRECTION INOUT ;
+    USE POWER ;
+    PORT
+      LAYER Metal4 ;
+        RECT 0.000 0.000 7.000 200.000 ;
+    END
+  END VPWR
+  PIN GND
+    DIRECTION INOUT ;
+    USE GROUND ;
+    PORT
+      LAYER Metal4 ;
+        RECT 7.320 0.000 9.680 200.000 ;
+    END
+  END GND
+  PIN GPWR
+    DIRECTION INOUT ;
+    USE POWER ;
+    PORT
+      LAYER Metal4 ;
+        RECT 10.000 0.000 17.000 200.000 ;
+    END
+  END GPWR
+  OBS
+      LAYER GatPoly ;
+        RECT 0.030 0.240 16.680 199.150 ;
+      LAYER Metal1 ;
+        RECT 0.030 0.240 16.680 199.150 ;
+      LAYER Metal2 ;
+        RECT 0.240 0.000 16.140 200.000 ;
+      LAYER Metal3 ;
+        RECT 0.000 0.000 17.000 198.980 ;
+  END
+END hm_pg_lv_17x200
+END LIBRARY
+

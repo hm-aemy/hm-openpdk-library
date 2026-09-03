@@ -26,13 +26,17 @@ xschem:
 lef: 
 	GDS_FILE="$(OUTPUT_DIR)/gds/hm_pg_lv_$(WIDTH)x$(HEIGHT).gds" \
 	CELL_NAME="hm_pg_lv_$(WIDTH)x$(HEIGHT)" \
-	LEF_FILE="$(OUTPUT_DIR)/my_cell.lef" \
+	LEF_FILE="$(OUTPUT_DIR)/lef/hm_pg_lv_$(WIDTH)x$(HEIGHT).lef" \
 	magic -dnull -noconsole ./helpers/extract_lef.tcl
 
 .PHONY: release
 release:
+	mkdir -p $(LIBS_REF_DIR)/gds
 	cp $(OUTPUT_DIR)/gds/hm_pg_lv_$(WIDTH)x$(HEIGHT).gds $(LIBS_REF_DIR)/gds/hm_pg_lv_$(WIDTH)x$(HEIGHT).gds
-	cp $(OUTPUT_DIR)/spice/
+	mkdir -p $(LIBS_REF_DIR)/spice
+	cp $(OUTPUT_DIR)/spice/hm_pg_lv_$(WIDTH)x$(HEIGHT).spice $(LIBS_REF_DIR)/spice/hm_pg_lv_$(WIDTH)x$(HEIGHT).spice
+	mkdir -p $(LIBS_REF_DIR)/lef
+	cp $(OUTPUT_DIR)/lef/hm_pg_lv_$(WIDTH)x$(HEIGHT).lef $(LIBS_REF_DIR)/lef/hm_pg_lv_$(WIDTH)x$(HEIGHT).lef
 
 .PHONY: clean
 clean:
