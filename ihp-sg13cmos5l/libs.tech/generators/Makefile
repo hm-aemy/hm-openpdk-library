@@ -5,10 +5,14 @@ OUTPUT_DIR = ./hm_pg/hm_pg_lv/output
 LIBS_REF_DIR = ../../libs.ref/hm_io
 PDK=ihp-sg13cmos5l
 PDK_ROOT?=../../../pdk/
+GDSFACTORY_VENV_PYTHON=.venv/bin/python
+
+.PHONY: all
+all: layout drc lef release
 
 .PHONY: layout
 layout:
-	python hm_pg/hm_pg_lv/pcell/hm_pg_lv_v2.py --width $(WIDTH) --height $(HEIGHT) --output $(OUTPUT_DIR)
+	$(GDSFACTORY_VENV_PYTHON) hm_pg/hm_pg_lv/pcell/hm_pg_lv_v2.py --width $(WIDTH) --height $(HEIGHT) --output $(OUTPUT_DIR)
 
 .PHONY: drc
 drc:

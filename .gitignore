@@ -5,3 +5,5 @@ pdk
 **/__pycache__/*
 **/backups/*
 ihp-sg13cmos5l/libs.tech/generators/hm_pg/hm_pg_lv/output/
+ihp-sg13cmos5l/libs.tech/generators/.venv
+ihp-sg13cmos5l/libs.tech/generators/.python-version
