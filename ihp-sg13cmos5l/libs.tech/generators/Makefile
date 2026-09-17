@@ -8,7 +8,7 @@ PDK_ROOT?=../../../pdk/
 GDSFACTORY_VENV=.venv
 
 .PHONY: all
-all: layout drc lef release
+all: layout drc cdl lvs lef release
 
 .PHONY: layout
 layout:
