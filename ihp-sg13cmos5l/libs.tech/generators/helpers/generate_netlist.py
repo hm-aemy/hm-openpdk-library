@@ -29,7 +29,7 @@ def main():
         help="Output SPICE netlist",
     )
 
-    args = parser.parse_args()
+    args, extra_args = parser.parse_known_args()
 
     # Read template
     template = args.template.read_text()
@@ -37,6 +37,23 @@ def main():
     # Read parameters
     with args.params.open() as f:
         params = json.load(f)
+
+    i = 0
+    while i < len(extra_args):
+        arg = extra_args[i]
+        if not arg.startswith("--"):
+            raise ValueError(f"Invalid extra argument: {arg}")
+        arg = arg[2:]
+        if "=" in arg:
+            key, value = arg.split("=", 1)
+        else:
+            key = arg
+            if i + 1 >= len(extra_args):
+                raise ValueError(f"Missing value for --{key}")
+            value = extra_args[i + 1]
+            i += 1
+        params[key] = value
+        i += 1
 
     def replace_parameter(match):
         parameter = match.group(1)
