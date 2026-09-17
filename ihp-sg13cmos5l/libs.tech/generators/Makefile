@@ -2,13 +2,13 @@ HEIGHT ?= 200
 WIDTH ?= 17
 
 OUTPUT_DIR = ./hm_pg/hm_pg_lv/output
-LIBS_REF_DIR = ../../libs.ref/hm_io
+LIBS_REF_DIR = ../../libs.ref/hm_pg
 PDK=ihp-sg13cmos5l
 PDK_ROOT?=../../../pdk/
 GDSFACTORY_VENV=.venv
 
 .PHONY: all
-all: layout drc cdl lvs lef release
+all: layout drc cdl lvs lef vh release
 
 .PHONY: layout
 layout:
@@ -25,8 +25,11 @@ spice:
 
 .PHONY: cdl
 cdl:
-
 	python helpers/generate_netlist.py --template ./hm_pg/hm_pg_lv/cdl/hm_pg_lv_template.spice --params ./hm_pg/hm_pg_lv/output/json/params_$(WIDTH)x$(HEIGHT).json --output ./hm_pg/hm_pg_lv/output/cdl/hm_pg_lv_$(WIDTH)x$(HEIGHT).spice --WIDTH $(WIDTH) --HEIGHT $(HEIGHT)
+
+.PHONY: vh
+vh:
+	python helpers/generate_netlist.py --template ./hm_pg/hm_pg_lv/vh/hm_pg_lv_template.vh --params ./hm_pg/hm_pg_lv/output/json/params_$(WIDTH)x$(HEIGHT).json --output ./hm_pg/hm_pg_lv/output/vh/hm_pg_lv_$(WIDTH)x$(HEIGHT).vh --WIDTH $(WIDTH) --HEIGHT $(HEIGHT)
 
 .PHONY: lvs
 lvs:
@@ -52,6 +55,10 @@ release:
 	cp $(OUTPUT_DIR)/spice/hm_pg_lv_$(WIDTH)x$(HEIGHT).spice $(LIBS_REF_DIR)/spice/hm_pg_lv_$(WIDTH)x$(HEIGHT).spice
 	mkdir -p $(LIBS_REF_DIR)/lef
 	cp $(OUTPUT_DIR)/lef/hm_pg_lv_$(WIDTH)x$(HEIGHT).lef $(LIBS_REF_DIR)/lef/hm_pg_lv_$(WIDTH)x$(HEIGHT).lef
+	mkdir -p $(LIBS_REF_DIR)/cdl
+	cp $(OUTPUT_DIR)/cdl/hm_pg_lv_$(WIDTH)x$(HEIGHT).spice $(LIBS_REF_DIR)/cdl/hm_pg_lv_$(WIDTH)x$(HEIGHT).spice
+	mkdir -p $(LIBS_REF_DIR)/vh
+	cp $(OUTPUT_DIR)/vh/hm_pg_lv_$(WIDTH)x$(HEIGHT).vh $(LIBS_REF_DIR)/vh/hm_pg_lv_$(WIDTH)x$(HEIGHT).vh
 
 .PHONY: clean
 clean:
