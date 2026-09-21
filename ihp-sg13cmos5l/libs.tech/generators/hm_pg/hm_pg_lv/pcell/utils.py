@@ -63,4 +63,75 @@ def populate_contact(c, column_width=10.0, row_width=10.0, center=[0, 0]):
         layer="Metal1drawing"
     )
     
+def connect_gates_to_bus(
+    c,
+    device,
+    length,
+    layer="Metal1drawing",
+    bus_side="bottom",
+    pin_name=None
+  ):
+    
+    polyBusWidth = 0.3
 
+    gates = get_gates(device)
+
+    xs = [float(gate.center[0]) for gate in gates]
+    #ys = [float(gate.center[1]) for gate in gates]
+
+    # Bus debajo de los dispositivos
+    if bus_side=="bottom":
+        bus_y = device.ports["G"].center[1]-device.ports["G"].width/2- polyBusWidth/2
+    elif bus_side=="top":
+        bus_y = device.ports["G"].center[1]+device.ports["G"].width/2 + polyBusWidth/2
+    else:
+        bus_y = device.ports["G"].center[1]-device.ports["G"].width/2 - polyBusWidth/2
+
+    # Línea horizontal
+    c.add_polygon(
+        [
+            (min(xs) - length / 2, bus_y - polyBusWidth / 2),
+            (max(xs) + length / 2, bus_y - polyBusWidth / 2),
+            (max(xs) + length / 2, bus_y + polyBusWidth / 2),
+            (min(xs) - length / 2, bus_y + polyBusWidth / 2),
+        ],
+        layer=layer,
+    )
+    populate_contact(
+        c,
+        column_width = polyBusWidth,
+        row_width = max(xs)-min(xs)+length,
+        center = ((min(xs)+max(xs))/2, bus_y)
+    )
+
+    if pin_name != None:
+        c.add_polygon(
+            [
+                (min(xs) - length / 2, bus_y - polyBusWidth / 2),
+                (max(xs) + length / 2, bus_y - polyBusWidth / 2),
+                (max(xs) + length / 2, bus_y + polyBusWidth / 2),
+                (min(xs) - length / 2, bus_y + polyBusWidth / 2),
+            ],
+            layer="Metal1pin",
+        )
+        c.add_label(text=pin_name, position=((min(xs)+max(xs))/2, bus_y), layer="Metal1text")
+
+        c.add_port(
+            name=pin_name,
+            center=((min(xs)+max(xs))/2, bus_y),
+            width=max(xs)-min(xs)+length,
+            orientation=0,
+            layer="Metal1pin"
+        )
+
+def get_gates(ref):
+    gates = []
+
+    for p in ref.ports:
+        if p.name=="G":
+            continue
+        if p.name.startswith("G"):
+            #idx = int(p.name.replace("G", ""))
+            gates.append(p)
+
+    return gates
