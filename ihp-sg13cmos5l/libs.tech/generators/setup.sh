@@ -38,7 +38,7 @@ if [ -f requirements.txt ]; then
 fi
 
 echo "Installing local package..."
-"$VENV/bin/python" -m pip install "$PACKAGE_DIR"
+"$VENV/bin/python" -m pip install -e "$PACKAGE_DIR"
 
 echo
 echo "Installation completed."
