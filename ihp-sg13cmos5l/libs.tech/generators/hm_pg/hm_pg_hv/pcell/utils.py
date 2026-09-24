@@ -403,3 +403,179 @@ def connect_ports_to_bus_v2(
                 row_width=polyBusWidth,
                 center=(x,bus_y)
             )
+
+def _connect_ports_to_bus_v3(
+    c,
+    ports,
+    offset=0.5,
+    verticalConnWidth = 0.3,
+    horizontalConnWidth = 0.3,
+    horizontalLayer="Metal1drawing",
+    verticalLayer="Metal1drawing",
+    busWidth = 0.3,
+    busSide="bottom",
+    busDirection="Horizontal",
+    pinName=None,
+    pinLayer=None,
+    pinTextLayer=None
+):
+
+    xs = [float(port.center[0]) for port in ports]
+    ys = [float(port.center[1]) for port in ports]
+
+
+    if busDirection=="Horizontal":
+        if busSide=="bottom":
+            bus_y = min(ys) - offset
+        elif busSide=="top":
+            bus_y = max(ys) + offset
+        elif busSide=="middle":
+            bus_y = (min(ys)+max(ys))/2+offset
+        else:
+            bus_y = min(ys) - offset
+
+        c.add_polygon(
+            [
+                (min(xs) - verticalConnWidth / 2, bus_y - busWidth / 2),
+                (max(xs) + verticalConnWidth / 2, bus_y - busWidth / 2),
+                (max(xs) + verticalConnWidth / 2, bus_y + busWidth / 2),
+                (min(xs) - verticalConnWidth / 2, bus_y + busWidth / 2),
+            ],
+            layer=horizontalLayer,
+        )
+
+        for port in ports:
+            x, y = map(float, port.center)
+
+            c.add_polygon(
+                [
+                    (x - verticalConnWidth / 2, min(y,bus_y) - busWidth / 2),
+                    (x + verticalConnWidth / 2, min(y,bus_y) - busWidth / 2),
+                    (x + verticalConnWidth / 2, max(y,bus_y) + busWidth / 2),
+                    (x - verticalConnWidth / 2, max(y,bus_y) + busWidth / 2),
+                ],
+                layer=verticalLayer,
+            )
+
+            if horizontalLayer != verticalLayer:
+                bottom_layer, top_layer = _via_stack_layers(horizontalLayer, verticalLayer)
+
+                populate_via_stack(
+                    c,
+                    column_width=busWidth,
+                    row_width=busWidth,
+                    center=(x,bus_y),
+                    bottom_layer=bottom_layer,
+                    top_layer=top_layer
+                )
+    elif busDirection=="Vertical":
+        # Bus al lado de los dispositivos
+        if busSide=="left":
+            bus_x = min(xs) - offset
+        elif busSide=="right":
+            bus_x = max(xs) + offset
+        elif busSide=="middle":
+            bus_x = (min(xs)+max(xs))/2+offset
+        else:
+            bus_x = min(xs) - offset
+
+        c.add_polygon(
+            [
+                (bus_x - busWidth / 2, min(ys) - busWidth / 2),
+                (bus_x + busWidth / 2, min(ys) - busWidth / 2),
+                (bus_x + busWidth / 2, max(ys) + busWidth / 2),
+                (bus_x - busWidth / 2, max(ys) + busWidth / 2),
+            ],
+            layer=verticalLayer,
+        )
+
+        for port in ports:
+            x, y = map(float, port.center)
+
+            c.add_polygon(
+                [
+                    (min(x,bus_x) - horizontalConnWidth / 2, y - horizontalConnWidth / 2),
+                    (max(x,bus_x) + horizontalConnWidth / 2, y - horizontalConnWidth / 2),
+                    (max(x,bus_x) + horizontalConnWidth / 2, y + horizontalConnWidth / 2),
+                    (min(x,bus_x) - horizontalConnWidth / 2, y + horizontalConnWidth / 2),
+                ],
+                layer=horizontalLayer,
+            )
+
+            if horizontalLayer != verticalLayer:
+                bottom_layer, top_layer = _via_stack_layers(horizontalLayer, verticalLayer)
+
+                populate_via_stack(
+                    c,
+                    column_width=busWidth,
+                    row_width=busWidth,
+                    center=(bus_x,y),
+                    bottom_layer=bottom_layer,
+                    top_layer=top_layer
+                )
+
+    if pinName != None and busDirection=="Horizontal":
+        c.add_polygon(
+            [
+                (min(xs) - verticalConnWidth / 2, bus_y - busWidth / 2),
+                (max(xs) + verticalConnWidth / 2, bus_y - busWidth / 2),
+                (max(xs) + verticalConnWidth / 2, bus_y + busWidth / 2),
+                (min(xs) - verticalConnWidth / 2, bus_y + busWidth / 2),
+            ],
+            layer=pinLayer,
+        )
+        c.add_label(text=pinName, position=((min(xs)+max(xs))/2, bus_y), layer=pinTextLayer)
+
+        print(max(xs))
+        print("Port width: ", max(xs)-min(xs)+verticalConnWidth)
+        c.add_port(
+            name=pinName,
+            center=((min(xs)+max(xs))/2, bus_y),
+            width=max(xs)-min(xs)+busWidth,
+            orientation=0,
+            layer=pinLayer
+        )
+    elif pinName != None and busDirection=="Vertical":
+        c.add_polygon(
+            [
+                (bus_x - busWidth / 2, min(ys) - busWidth / 2),
+                (bus_x + busWidth / 2, min(ys) - busWidth / 2),
+                (bus_x + busWidth / 2, max(ys) + busWidth / 2),
+                (bus_x - busWidth / 2, max(ys) + busWidth / 2),
+            ],
+            layer=pinLayer,
+        )
+        c.add_label(text=pinName, position=(bus_x, (min(ys)+max(ys))/2), layer=pinTextLayer)
+
+        c.add_port(
+            name=pinName,
+            center=(bus_x, (min(ys)+max(ys))/2),
+            width=max(ys)-min(ys)+busWidth,
+            orientation=90,
+            layer=pinLayer
+        )
+
+def _via_stack_layers(first_layer, second_layer):
+    # Los nombres de dibujo se convierten a los nombres usados por via_stack.
+    layer_order = {
+        "Activ": 0,
+        "GatPoly": 0,
+        "Metal1": 1,
+        "Metal2": 2,
+        "Metal3": 3,
+        "Metal4": 4,
+        "Metal5": 5,
+        "TopMetal1": 6,
+        "TopMetal2": 7,
+    }
+    first = first_layer.removesuffix("drawing")
+    second = second_layer.removesuffix("drawing")
+    for layer in (first, second):
+        if layer not in layer_order:
+            raise ValueError(f"Unsupported via stack layer: {layer}")
+    if first != second and layer_order[first] == layer_order[second]:
+        raise ValueError(f"Cannot stack between {first} and {second}")
+    if layer_order[first] <= layer_order[second]:
+        return first, second
+    return second, first
+

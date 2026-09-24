@@ -228,6 +228,16 @@ def discharge_m1(
         port_type="electrical",
     )
 
+    c.add_polygon(
+        [
+            (refs[0].xmax, refs[0].ymin),
+            (refs[1].xmin, refs[1].ymin),
+            (refs[1].xmin, refs[1].ymax),
+            (refs[0].xmax, refs[0].ymax),
+        ],
+        layer="ThickGateOxdrawing"
+    )
+
     return c
 
 

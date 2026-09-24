@@ -2,7 +2,7 @@ import gdsfactory as gf
 from gdsfactory import Component
 from ihp import PDK
 from ihp.cells import nmos_hv, pmos_hv, guard_ring, ptap1, ntap1
-from utils import connect_gates_to_bus, populate_via_stack, get_sd_ports_even_odd, connect_ports_to_bus, connect_gates_to_bus_v2
+from utils import connect_gates_to_bus, populate_via_stack, get_sd_ports_even_odd, connect_ports_to_bus, connect_gates_to_bus_v2, _connect_ports_to_bus_v3
 
 from hm_pg_lv_buffer import buffer
 
@@ -13,7 +13,7 @@ def cross_couple_inv_hv(
     cc_nmos_width = 1.0,
     cc_pmos_width = 1.0,
     cc_nmos_length = 0.45,
-    cc_pmos_length = 0.4,
+    cc_pmos_length = 0.45,
 
     inv_lv_width =  1.0,
     
@@ -25,8 +25,8 @@ def cross_couple_inv_hv(
     device_sep = 0.1
 
     # cross-coupled network
-    nmos_cc = c.add_ref(nmos_hv(width=cc_nmos_width, length=0.45, nf=1))
-    pmos_inv_hv_cc = c.add_ref(pmos_hv(width=cc_pmos_width+inv_hv_pmos_width, length=0.4, nf=3))
+    nmos_cc = c.add_ref(nmos_hv(width=cc_nmos_width, length=cc_nmos_length, nf=1))
+    pmos_inv_hv_cc = c.add_ref(pmos_hv(width=cc_pmos_width+inv_hv_pmos_width, length=cc_pmos_length, nf=3))
 
     pmos_inv_hv_cc.xmin = 0 
     nmos_cc.ymin = 0
@@ -39,7 +39,19 @@ def cross_couple_inv_hv(
     nmos_inv_hv.ymin = 0
     nmos_inv_hv.xmax = pmos_inv_hv_cc.xmax
 
-    connect_gates_to_bus(c, pmos_inv_hv_cc, length=0.45, layer="GatPolydrawing", bus_side="bottom", pin_name="ccGate")
+    #connect_gates_to_bus(c, pmos_inv_hv_cc, length=0.45, layer="GatPolydrawing", bus_side="bottom", pin_name="ccGate")
+    _connect_ports_to_bus_v3(
+        c,
+        [pmos_inv_hv_cc.ports["G1"], pmos_inv_hv_cc.ports["G2"], pmos_inv_hv_cc.ports["G3"], nmos_inv_hv.ports["G"]],
+        offset=0.03,
+        verticalConnWidth=cc_pmos_length,
+        horizontalLayer="Metal1drawing",
+        verticalLayer="GatPolydrawing",
+        busSide="middle",
+        pinName="ccGate",
+        pinLayer="Metal1pin",
+        pinTextLayer="Metal1text"
+    )
 
     pmos_inv_hv_cc_drains, pmos_inv_hv_cc_sources = get_sd_ports_even_odd(pmos_inv_hv_cc)
     nmos_inv_hv_sources, nmos_inv_hv_drains = get_sd_ports_even_odd(nmos_inv_hv)
@@ -102,18 +114,18 @@ def cross_couple_inv_hv(
         top_layer="Metal2"
     )
 
-    invHvGatePath = [
-        nmos_inv_hv.ports["G"].center,
-        (nmos_inv_hv.ports["G"].center[0], c.ports["ccGate"].center[1]),
-        c.ports["ccGate"].center
-    ]
-    path = gf.Path(invHvGatePath)
-    path_component = gf.path.extrude(
-        path,
-        layer = "GatPolydrawing",
-        width = 0.3
-    )
-    c.add_ref(path_component)
+    #invHvGatePath = [
+    #    nmos_inv_hv.ports["G"].center,
+    #    (nmos_inv_hv.ports["G"].center[0], c.ports["ccGate"].center[1]),
+    #    c.ports["ccGate"].center
+    #]
+    #path = gf.Path(invHvGatePath)
+    #path_component = gf.path.extrude(
+    #    path,
+    #    layer = "GatPolydrawing",
+    #    width = 0.3
+    #)
+    #c.add_ref(path_component)
 
     invHvOutPath = [
         pmos_inv_hv_cc_drains[1].center,
@@ -198,7 +210,7 @@ def cross_couple_inv_hv(
         ptap1(
             width=nmos_cc_sources[0].width,
             length=0.38,
-            rows=5
+            rows=3
         )
     )
     guardNmos.center = ((nmos_cc_sources[0].center[0]+nmos_inv_hv_sources[0].center[0])/2, nmos_cc_sources[0].center[1])
@@ -215,7 +227,7 @@ def cross_couple_inv_hv(
         ntap1(
             width=pmos_inv_hv_cc_sources[0].width,
             length=0.38,
-            rows=5
+            rows=3
         )
     )
     ntap.center = (pmos_inv_hv_cc.xmax, pmos_inv_hv_cc_sources[1].center[1])
@@ -255,14 +267,25 @@ def cross_couple_inv_hv(
         layer="Metal1pin",
         port_type="electrical",
     )
-    c.add_port(
-        name="IN",
-        center=nmos_cc.ports["G"].center,
-        width=nmos_cc.ports["G"].width,
-        orientation=180,
-        layer="Metal1pin",
-        port_type="electrical",
+    _connect_ports_to_bus_v3(
+        c,
+        ports=[nmos_cc.ports["G"]],
+        offset=nmos_cc.ports["G"].width/2+0.3/2,
+        verticalLayer="GatPolydrawing",
+        verticalConnWidth=cc_nmos_length,
+        pinName="IN",
+        pinLayer="Metal1pin",
+        pinTextLayer="Metal1text"
+
     )
+    #c.add_port(
+    #    name="IN",
+    #    center=nmos_cc.ports["G"].center,
+    #    width=nmos_cc.ports["G"].width,
+    #    orientation=180,
+    #    layer="Metal1pin",
+    #    port_type="electrical",
+    #)
 
     c.add_port(
         name="OUT",
@@ -472,20 +495,20 @@ def lv2hv() -> Component:
     inBuf.center = cc.center
     inBuf.xmin = cc.xmax + sep
 
-    connect_gates_to_bus_v2(
-        c,
-        [cc.ports["IN_P"]],
-        length=0.45,
-        offset=0.0,
-        bus_side="bottom"
-    )
-    connect_gates_to_bus_v2(
-        c,
-        [cc.ports["IN_N"]],
-        length=0.45,
-        offset=0.0,
-        bus_side="bottom"
-    )
+    #connect_gates_to_bus_v2(
+    #    c,
+    #    [cc.ports["IN_P"]],
+    #    length=0.45,
+    #    offset=0.0,
+    #    bus_side="bottom"
+    #)
+    #connect_gates_to_bus_v2(
+    #    c,
+    #    [cc.ports["IN_N"]],
+    #    length=0.45,
+    #    offset=0.0,
+    #    bus_side="bottom"
+    #)
 
     inpConnPath = [
         cc.ports["IN_P"].center,
@@ -502,8 +525,8 @@ def lv2hv() -> Component:
     inBufPWidth = 2
     innConnPath = [
         inBuf.ports["IN_N"].center,
-        (inBuf.ports["IN_N"].center[0], inBuf.ports["IN_N"].center[1]+inBufPWidth+1.5),
-        (cc.ports["IN_N"].center[0]-cc.ports["IN_N"].width/2-0.3, inBuf.ports["IN_N"].center[1]+inBufPWidth+1.5),
+        (inBuf.ports["IN_N"].center[0], inBuf.ports["IN_N"].center[1]+inBufPWidth+1.6),
+        (cc.ports["IN_N"].center[0]-cc.ports["IN_N"].width/2-0.3, inBuf.ports["IN_N"].center[1]+inBufPWidth+1.6),
         (cc.ports["IN_N"].center[0]-cc.ports["IN_N"].width/2-0.3, cc.ports["IN_N"].center[1]),
     ]
     path = gf.Path(innConnPath)

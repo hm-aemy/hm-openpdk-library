@@ -34,7 +34,7 @@ def hm_pg_lv(
     met3Sep=0.32,
     met4Sep=0.32,
 
-    blockSep=0.5 # there must be a better name.
+    blockSep=0.62 # there must be a better name.
 ) -> Component:
     c = Component(f"hm_pg_hv_{width}x{height}")
     invInConnL = 0.5

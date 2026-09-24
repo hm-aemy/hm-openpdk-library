@@ -26,6 +26,16 @@ def inverter(
     p.x = n.x
     p.ymin = n.ymax + device_sep
 
+    c.add_polygon(
+        [
+            (n.xmin, n.ymax),
+            (n.xmax, n.ymax),
+            (n.xmax, p.ymin),
+            (n.xmin, p.ymin),
+        ],
+        layer="ThickGateOxdrawing"
+    )
+
     guard_width = 0.32
     guard_sep = 0.3
 

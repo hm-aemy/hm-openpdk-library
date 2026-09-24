@@ -90,10 +90,6 @@ def power_hv_pmos(
                 center=p.center,
             )
 
-            print("via_stack column_width: ", p.width)
-            print("via_stack center[1]: ", p.center[1])
-            print("bottom: ", p.center[1]-p.width/2)
-            print("top: ", p.center[1]+p.width/2)
 
             m1W=0.16
             m1S=0.6
