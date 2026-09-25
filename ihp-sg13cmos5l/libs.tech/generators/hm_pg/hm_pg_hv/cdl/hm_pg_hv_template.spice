@@ -1,0 +1,45 @@
+** sch_path: /foss/designs/hm-openpdk-library/ihp-sg13cmos5l/libs.tech/xschem/hm_analog/hm_pg_hv.sch
+.subckt hm_pg_hv_{{WIDTH}}x{{HEIGHT}} GPWR VAPWR VDPWR ctrl VGND
+*.PININFO ctrl:I VAPWR:B VGND:B GPWR:B VDPWR:B
+x2 VAPWR VDPWR ctrl H_crtl_p H_crtl_n VGND lv2hv
+MM4 ctrl_n H_crtl_p VGND VGND sg13_hv_nmos w=2.6u l=0.45u ng=1
+MM5 ctrl_n H_crtl_p VAPWR VAPWR sg13_hv_pmos w=4.44u l=0.45u ng=1
+MM1 GPWR ctrl_n VAPWR VAPWR sg13_hv_pmos w={{width}}u l={{length}}u ng={{ng}} m={{m}} mm_ok=1
+x3 VGND GPWR ctrl_n hv_dischg
+.ends
+
+* expanding   symbol:  /foss/designs/hm-openpdk-library/ihp-sg13cmos5l/libs.tech/xschem/hm_analog/lv2hv.sym # of pins=6
+** sym_path: /foss/designs/hm-openpdk-library/ihp-sg13cmos5l/libs.tech/xschem/hm_analog/lv2hv.sym
+** sch_path: /foss/designs/hm-openpdk-library/ihp-sg13cmos5l/libs.tech/xschem/hm_analog/lv2hv.sch
+.subckt lv2hv VAPWR VDPWR in out_p out_n VGND
+*.PININFO VAPWR:B VGND:B in:I VDPWR:B out_p:O out_n:O
+MM1 in_n in VGND VGND sg13_lv_nmos w=1u l=0.13u ng=1
+MM2 in_n in VDPWR VDPWR sg13_lv_pmos w=2u l=0.13u ng=1
+MM3 in_p in_n VGND VGND sg13_lv_nmos w=1u l=0.13u ng=1
+MM4 in_p in_n VDPWR VDPWR sg13_lv_pmos w=2u l=0.13u ng=1
+MM5 out_p net1 VGND VGND sg13_hv_nmos w=1u l=0.45u ng=1
+MM6 net1 in_p VGND VGND sg13_hv_nmos w=1u l=0.45u ng=1
+MM7 out_p net1 VAPWR VAPWR sg13_hv_pmos w=2u l=0.45u ng=1
+MM8 net1 net2 VAPWR VAPWR sg13_hv_pmos w=1u l=0.45u ng=1
+MM9 net2 net1 VAPWR VAPWR sg13_hv_pmos w=1u l=0.45u ng=1
+MM10 net2 in_n VGND VGND sg13_hv_nmos w=1u l=0.45u ng=1
+MM11 out_n net2 VGND VGND sg13_hv_nmos w=1u l=0.45u ng=1
+MM12 out_n net2 VAPWR VAPWR sg13_hv_pmos w=2u l=0.45u ng=1
+.ends
+
+
+* expanding   symbol:  /foss/designs/hm-openpdk-library/ihp-sg13cmos5l/libs.tech/xschem/hm_analog/hv_dischg.sym # of pins=3
+** sym_path: /foss/designs/hm-openpdk-library/ihp-sg13cmos5l/libs.tech/xschem/hm_analog/hv_dischg.sym
+** sch_path: /foss/designs/hm-openpdk-library/ihp-sg13cmos5l/libs.tech/xschem/hm_analog/hv_dischg.sch
+.subckt hv_dischg VGND GPWR gate
+*.PININFO GPWR:B VGND:B gate:I
+MM6 GPWR gate net6 VGND sg13_hv_nmos w=0.5u l=0.65u ng=1
+MM7 net6 gate net5 VGND sg13_hv_nmos w=0.5u l=0.65u ng=1
+MM8 net5 gate net4 VGND sg13_hv_nmos w=0.5u l=0.65u ng=1
+MM9 net4 gate VGND VGND sg13_hv_nmos w=0.5u l=0.65u ng=1
+MM1 GPWR gate net1 VGND sg13_hv_nmos w=0.5u l=0.65u ng=1
+MM2 net1 gate net2 VGND sg13_hv_nmos w=0.5u l=0.65u ng=1
+MM3 net2 gate net3 VGND sg13_hv_nmos w=0.5u l=0.65u ng=1
+MM4 net3 gate VGND VGND sg13_hv_nmos w=0.5u l=0.65u ng=1
+.ends
+
