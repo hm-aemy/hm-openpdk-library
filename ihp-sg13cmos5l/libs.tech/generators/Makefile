@@ -9,7 +9,7 @@ PDK_ROOT?=../../../pdk/
 GDSFACTORY_VENV=.venv
 
 .PHONY: all
-all: layout drc cdl lvs lef vh release
+all: layout drc spice cdl lvs lef vh release
 
 .PHONY: layout
 layout:
@@ -32,9 +32,9 @@ cdl:
 vh:
 	python helpers/generate_netlist.py --template ./hm_pg/hm_pg_$(TYPE)/vh/hm_pg_$(TYPE)_template.vh --params ./hm_pg/hm_pg_$(TYPE)/output/json/params_$(WIDTH)x$(HEIGHT).json --output ./hm_pg/hm_pg_$(TYPE)/output/vh/hm_pg_$(TYPE)_$(WIDTH)x$(HEIGHT).vh --WIDTH $(WIDTH) --HEIGHT $(HEIGHT)
 
-.PHONY: $(TYPE)s
-$(TYPE)s:
-	python $(PDK_ROOT)/$(PDK)/libs.tech/klayout/tech/$(TYPE)s/run_$(TYPE)s.py --layout hm_pg/hm_pg_$(TYPE)/output/gds/hm_pg_$(TYPE)_$(WIDTH)x$(HEIGHT).gds --netlist hm_pg/hm_pg_$(TYPE)/output/cdl/hm_pg_$(TYPE)_$(WIDTH)x$(HEIGHT).spice --ignore_top_ports_mismatch --run_dir $(OUTPUT_DIR)/lvs
+.PHONY: lvs
+lvs:
+	python $(PDK_ROOT)/$(PDK)/libs.tech/klayout/tech/lvs/run_lvs.py --layout hm_pg/hm_pg_$(TYPE)/output/gds/hm_pg_$(TYPE)_$(WIDTH)x$(HEIGHT).gds --netlist hm_pg/hm_pg_$(TYPE)/output/cdl/hm_pg_$(TYPE)_$(WIDTH)x$(HEIGHT).spice --ignore_top_ports_mismatch --run_dir $(OUTPUT_DIR)/lvs
 
 
 .PHONY: xschem
@@ -43,10 +43,11 @@ xschem:
 
 .PHONY: lef
 lef: 
+	mkdir -p $(OUTPUT_DIR)/lef
 	GDS_FILE="$(OUTPUT_DIR)/gds/hm_pg_$(TYPE)_$(WIDTH)x$(HEIGHT).gds" \
 	CELL_NAME="hm_pg_$(TYPE)_$(WIDTH)x$(HEIGHT)" \
 	LEF_FILE="$(OUTPUT_DIR)/lef/hm_pg_$(TYPE)_$(WIDTH)x$(HEIGHT).lef" \
-	magic -dnull -noconsole ./helpers/extract_lef.tcl
+	magic -dnull -noconsole ./hm_pg/hm_pg_$(TYPE)/lef/extract_lef.tcl
 
 .PHONY: release
 release:
