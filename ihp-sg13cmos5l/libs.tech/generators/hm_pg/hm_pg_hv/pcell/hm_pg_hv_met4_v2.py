@@ -39,7 +39,7 @@ def hm_pg_hv_met4(
         ],
         layer="Metal4pin"
     )
-    c.add_label(text="VPWRA", position=(vpwrWidth/2, height/2), layer="Metal4text")
+    c.add_label(text="VAPWR", position=(vpwrWidth/2, height/2), layer="Metal4text")
 
     #GND section
     c.add_polygon(
@@ -88,13 +88,13 @@ def hm_pg_hv_met4(
         layer="Metal4pin"
     )
     c.add_port(
-        name="VPWRD",
+        name="VDPWR",
         center=((2*vpwrWidth+4*met4_sep+3*gnd_vpwrd_width)/2, height/2),
         width=height,
         orientation=90,
         layer="Metal4pin"
     )
-    c.add_label(text="VPWRD", position=((2*vpwrWidth+4*met4_sep+3*gnd_vpwrd_width)/2, height/2), layer="Metal4text")
+    c.add_label(text="VDPWR", position=((2*vpwrWidth+4*met4_sep+3*gnd_vpwrd_width)/2, height/2), layer="Metal4text")
 
 
     #GPWR section

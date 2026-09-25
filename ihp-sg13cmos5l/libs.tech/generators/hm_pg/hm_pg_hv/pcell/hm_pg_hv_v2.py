@@ -590,7 +590,7 @@ def hm_pg_lv(
 
     path = gf.Path([
         lv2hv_ref.ports["VDD_BUFF"].center,
-        (met4_ref.ports["VPWRD"].center[0], lv2hv_ref.ports["VDD_BUFF"].center[1])
+        (met4_ref.ports["VDPWR"].center[0], lv2hv_ref.ports["VDD_BUFF"].center[1])
     ])
     path_component = gf.path.extrude(
         path,
@@ -603,7 +603,7 @@ def hm_pg_lv(
         c,
         column_width=lv2hv_ref.ports["VDD_BUFF"].width,
         row_width=0.3,
-        center=(met4_ref.ports["VPWRD"].center[0], lv2hv_ref.ports["VDD_BUFF"].center[1]),
+        center=(met4_ref.ports["VDPWR"].center[0], lv2hv_ref.ports["VDD_BUFF"].center[1]),
         bottom_layer="Metal3",
         top_layer="Metal4"
     )
