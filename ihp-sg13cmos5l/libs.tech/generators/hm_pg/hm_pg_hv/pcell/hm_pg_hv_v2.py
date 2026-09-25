@@ -6,6 +6,8 @@ import argparse
 from pathlib import Path
 import json
 
+from jax.numpy import column_stack
+
 from hm_pg_hv_power_pmos_v2 import power_hv_pmos
 from hm_pg_hv_discharge_m1 import discharge_m1
 from hm_pg_hv_inv import inverter
@@ -183,6 +185,15 @@ def hm_pg_lv(
     )
     c.add_ref(path_component)
 
+    ## Connect VPWRD to lv inverter of lv2hv module
+    populate_via_stack(
+        c, 
+        column_width=lv2hv_ref.ports["VDD_BUFF"].width,
+        row_width=0.3,
+        center=lv2hv_ref.ports["VDD_BUFF"].center,
+        bottom_layer="Metal1",
+        top_layer="Metal3"
+    )
 
 
     #inverter input connection
@@ -576,6 +587,27 @@ def hm_pg_lv(
             met4Sep
         )
     )
+
+    path = gf.Path([
+        lv2hv_ref.ports["VDD_BUFF"].center,
+        (met4_ref.ports["VPWRD"].center[0], lv2hv_ref.ports["VDD_BUFF"].center[1])
+    ])
+    path_component = gf.path.extrude(
+        path,
+        layer = "Metal3drawing",
+        width = 0.3
+    )
+    c.add_ref(path_component)
+
+    populate_via_stack(
+        c,
+        column_width=lv2hv_ref.ports["VDD_BUFF"].width,
+        row_width=0.3,
+        center=(met4_ref.ports["VPWRD"].center[0], lv2hv_ref.ports["VDD_BUFF"].center[1]),
+        bottom_layer="Metal3",
+        top_layer="Metal4"
+    )
+
     populate_via_stack(
         c,
         column_width=met3_ref.ports["GPWR"].width,
@@ -595,8 +627,8 @@ def hm_pg_lv(
     populate_via_stack(
         c,
         column_width=met3_ref.ports["VPWR"].width,
-        row_width=width-gpwrWidth-met3Sep-(vpwrWidth+met3Sep),
-        center=(width/2, height/2),
+        row_width=(width-gpwrWidth-3*met3Sep-vpwrWidth)/2,
+        center=met4_ref.ports["GND"].center,
         bottom_layer="Metal3",
         top_layer="Metal4"
     )

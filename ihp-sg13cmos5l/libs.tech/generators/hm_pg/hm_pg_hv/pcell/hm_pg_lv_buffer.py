@@ -203,6 +203,15 @@ def buffer(
         port_type="electrical",
     )
 
+    c.add_port(
+        name="VDD",
+        center=ntap.ports["TAP"].center,
+        width=ntap.ports["TAP"].width,
+        orientation=180,
+        layer="Metal1pin",
+        port_type="electrical",
+    )
+
     return c
 
 if __name__ == "__main__":

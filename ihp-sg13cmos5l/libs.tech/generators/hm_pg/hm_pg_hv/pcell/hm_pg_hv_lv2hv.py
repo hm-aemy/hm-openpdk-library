@@ -605,6 +605,15 @@ def lv2hv() -> Component:
         port_type="electrical",
     )
     c.add_label(text="VSS_BUFF", position=inBuf.ports["VSS"].center, layer="Metal1text")
+    c.add_port(
+        name="VDD_BUFF",
+        center=inBuf.ports["VDD"].center,
+        width=inBuf.ports["VDD"].width,
+        orientation=180,
+        layer="Metal1pin",
+        port_type="electrical",
+    )
+    c.add_label(text="VDD_BUFF", position=inBuf.ports["VDD"].center, layer="Metal1text")
 
     c.add_port(
         name="VDD_CC",

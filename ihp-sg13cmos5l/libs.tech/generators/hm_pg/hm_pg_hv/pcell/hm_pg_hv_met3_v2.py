@@ -18,7 +18,7 @@ def hm_pg_hv_met3(
 
     invInConnL=0.5,
     invInConny=199.5,
-    invInConnSep=0.3
+    invInConnSep=6
 
 ) -> Component:
 
