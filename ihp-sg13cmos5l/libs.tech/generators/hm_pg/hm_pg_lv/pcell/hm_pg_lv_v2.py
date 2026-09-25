@@ -507,7 +507,10 @@ if __name__ == "__main__":
 
     top = hm_pg_lv(width=width, height=height)
     top.flatten()
-    top.write_gds(output_dir / f"gds/hm_pg_lv_{width}x{height}.gds")
+    top.write_gds(
+        output_dir / f"gds/hm_pg_lv_{width}x{height}.gds",
+        with_metadata=False,
+    )
 
     output_json_path = Path(output_dir / f"json/params_{width}x{height}.json")
     output_json_path.parent.mkdir(parents=True, exist_ok=True)
