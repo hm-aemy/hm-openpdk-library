@@ -1,0 +1,57 @@
+** sch_path: /foss/designs/hm-openpdk-library/ihp-sg13cmos5l/libs.tech/xschem/hm_analog/hm_pg_hv.sch
+**.subckt hm_pg_hv GPWR VAPWR VDPWR ctrl VGND
+*.ipin ctrl
+*.iopin VAPWR
+*.iopin VGND
+*.iopin GPWR
+*.iopin VDPWR
+x2 VAPWR VDPWR ctrl H_crtl_p H_crtl_n VGND lv2hv
+XM4 ctrl_n H_crtl_p VGND VGND sg13_hv_nmos w=2.6u l=0.45u ng=1 m=1 mm_ok=1
+XM5 ctrl_n H_crtl_p VAPWR VAPWR sg13_hv_pmos w=4.44u l=0.45u ng=1 m=1 mm_ok=1
+XM1 GPWR ctrl_n VAPWR VAPWR sg13_hv_pmos w=1445.4u l=0.45u ng=219 m=2 mm_ok=1
+x3 VGND GPWR ctrl_n hv_dischg
+**.ends
+
+* expanding   symbol:  /foss/designs/hm-openpdk-library/ihp-sg13cmos5l/libs.tech/xschem/hm_analog/lv2hv.sym # of pins=6
+** sym_path: /foss/designs/hm-openpdk-library/ihp-sg13cmos5l/libs.tech/xschem/hm_analog/lv2hv.sym
+** sch_path: /foss/designs/hm-openpdk-library/ihp-sg13cmos5l/libs.tech/xschem/hm_analog/lv2hv.sch
+.subckt lv2hv VAPWR VDPWR in out_p out_n VGND
+*.iopin VAPWR
+*.iopin VGND
+*.ipin in
+*.iopin VDPWR
+*.opin out_p
+*.opin out_n
+XM1 in_n in VGND VGND sg13_lv_nmos w=1u l=0.13u ng=1 m=1 mm_ok=1
+XM2 in_n in VDPWR VDPWR sg13_lv_pmos w=2u l=0.13u ng=1 m=1 mm_ok=1
+XM3 in_p in_n VGND VGND sg13_lv_nmos w=1u l=0.13u ng=1 m=1 mm_ok=1
+XM4 in_p in_n VDPWR VDPWR sg13_lv_pmos w=2u l=0.13u ng=1 m=1 mm_ok=1
+XM5 out_p net1 VGND VGND sg13_hv_nmos w=1u l=0.45u ng=1 m=1 mm_ok=1
+XM6 net1 in_p VGND VGND sg13_hv_nmos w=1u l=0.45u ng=1 m=1 mm_ok=1
+XM7 out_p net1 VAPWR VAPWR sg13_hv_pmos w=2u l=0.45u ng=1 m=1 mm_ok=1
+XM8 net1 net2 VAPWR VAPWR sg13_hv_pmos w=1u l=0.45u ng=1 m=1 mm_ok=1
+XM9 net2 net1 VAPWR VAPWR sg13_hv_pmos w=1u l=0.45u ng=1 m=1 mm_ok=1
+XM10 net2 in_n VGND VGND sg13_hv_nmos w=1u l=0.45u ng=1 m=1 mm_ok=1
+XM11 out_n net2 VGND VGND sg13_hv_nmos w=1u l=0.45u ng=1 m=1 mm_ok=1
+XM12 out_n net2 VAPWR VAPWR sg13_hv_pmos w=2u l=0.45u ng=1 m=1 mm_ok=1
+.ends
+
+
+* expanding   symbol:  /foss/designs/hm-openpdk-library/ihp-sg13cmos5l/libs.tech/xschem/hm_analog/hv_dischg.sym # of pins=3
+** sym_path: /foss/designs/hm-openpdk-library/ihp-sg13cmos5l/libs.tech/xschem/hm_analog/hv_dischg.sym
+** sch_path: /foss/designs/hm-openpdk-library/ihp-sg13cmos5l/libs.tech/xschem/hm_analog/hv_dischg.sch
+.subckt hv_dischg VGND GPWR gate
+*.iopin GPWR
+*.iopin VGND
+*.ipin gate
+XM6 GPWR gate net6 VGND sg13_hv_nmos w=0.5u l=0.65u ng=1 m=1 mm_ok=1
+XM7 net6 gate net5 VGND sg13_hv_nmos w=0.5u l=0.65u ng=1 m=1 mm_ok=1
+XM8 net5 gate net4 VGND sg13_hv_nmos w=0.5u l=0.65u ng=1 m=1 mm_ok=1
+XM9 net4 gate VGND VGND sg13_hv_nmos w=0.5u l=0.65u ng=1 m=1 mm_ok=1
+XM1 GPWR gate net1 VGND sg13_hv_nmos w=0.5u l=0.65u ng=1 m=1 mm_ok=1
+XM2 net1 gate net2 VGND sg13_hv_nmos w=0.5u l=0.65u ng=1 m=1 mm_ok=1
+XM3 net2 gate net3 VGND sg13_hv_nmos w=0.5u l=0.65u ng=1 m=1 mm_ok=1
+XM4 net3 gate VGND VGND sg13_hv_nmos w=0.5u l=0.65u ng=1 m=1 mm_ok=1
+.ends
+
+.end
