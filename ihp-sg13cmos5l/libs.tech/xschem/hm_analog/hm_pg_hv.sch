@@ -74,8 +74,8 @@ spiceprefix=X
 }
 C {sg13cmos5l_pr/sg13_hv_pmos.sym} 160 -100 3 0 {name=M1
 l=0.45u
-w=1452u
-ng=220
+w=1445.4u
+ng=219
 m=2
 mm_ok=1
 model=sg13_hv_pmos

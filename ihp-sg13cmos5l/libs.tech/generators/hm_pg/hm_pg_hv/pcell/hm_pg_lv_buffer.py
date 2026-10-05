@@ -75,7 +75,7 @@ def buffer(
         length=0.13,
         offset=-0.3,
         bus_side="middle",
-        pin_name="IN_N_GATE"
+        pin_name="IN_N_GATE",
     )
     connect_gates_to_bus_v2(
         c,
@@ -83,7 +83,7 @@ def buffer(
         length=0.13,
         offset=-0.3,
         bus_side="middle",
-        pin_name="IN"
+        pin_name="IN",
     )
 
     populate_via_stack(

@@ -236,7 +236,7 @@ def connect_gates_to_bus_v2(
     offset=0.0,
     layer="GatPolydrawing",
     pin_layer="Metal1pin",
-    text_layer="Metal1text",
+    text_layer=None,
     bus_side="bottom",
     pin_name=None
 ):
@@ -302,7 +302,8 @@ def connect_gates_to_bus_v2(
                 ],
                 layer=pin_layer,
             )
-            c.add_label(text=pin_name, position=((min(xs)+max(xs))/2, bus_y), layer=text_layer)
+            if text_layer!=None:
+                c.add_label(text=pin_name, position=((min(xs)+max(xs))/2, bus_y), layer=text_layer)
 
             c.add_port(
                 name=pin_name,
@@ -320,7 +321,8 @@ def connect_ports_to_bus_v2(
     ver_layer="Metal1drawing",
     polyBusWidth=None,
     bus_side="bottom",
-    pin_name=None
+    pin_name=None,
+    addLabel=False
   ):
     if hor_layer=="Metal1drawing":
         if polyBusWidth == None:
@@ -371,7 +373,8 @@ def connect_ports_to_bus_v2(
             ],
             layer=pin_layer,
         )
-        c.add_label(text=pin_name, position=((min(xs)+max(xs))/2, bus_y), layer=text_layer)
+        if addLabel:
+            c.add_label(text=pin_name, position=((min(xs)+max(xs))/2, bus_y), layer=text_layer)
 
         c.add_port(
             name=pin_name,
@@ -524,7 +527,8 @@ def _connect_ports_to_bus_v3(
             ],
             layer=pinLayer,
         )
-        c.add_label(text=pinName, position=((min(xs)+max(xs))/2, bus_y), layer=pinTextLayer)
+        if pinTextLayer!=None:
+            c.add_label(text=pinName, position=((min(xs)+max(xs))/2, bus_y), layer=pinTextLayer)
 
         print(max(xs))
         print("Port width: ", max(xs)-min(xs)+verticalConnWidth)
@@ -545,7 +549,8 @@ def _connect_ports_to_bus_v3(
             ],
             layer=pinLayer,
         )
-        c.add_label(text=pinName, position=(bus_x, (min(ys)+max(ys))/2), layer=pinTextLayer)
+        if pinTextLayer!=None:
+            c.add_label(text=pinName, position=(bus_x, (min(ys)+max(ys))/2), layer=pinTextLayer)
 
         c.add_port(
             name=pinName,

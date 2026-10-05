@@ -173,7 +173,7 @@ w=1u
 spiceprefix=X
 }
 C {sg13cmos5l_pr/sg13_hv_pmos.sym} 10 -30 0 1 {name=M7
-l=0.4u
+l=0.45u
 w=2u
  ng=1
  m=1
@@ -182,7 +182,7 @@ w=2u
 spiceprefix=X
 }
 C {sg13cmos5l_pr/sg13_hv_pmos.sym} 210 -30 0 1 {name=M8
-l=0.4u
+l=0.45u
 w=1u
  ng=1
  m=1
@@ -191,7 +191,7 @@ w=1u
 spiceprefix=X
 }
 C {sg13cmos5l_pr/sg13_hv_pmos.sym} 350 -30 0 0 {name=M9
-l=0.4u
+l=0.45u
 w=1u
  ng=1
  m=1
@@ -218,7 +218,7 @@ w=1u
 spiceprefix=X
 }
 C {sg13cmos5l_pr/sg13_hv_pmos.sym} 550 -30 0 0 {name=M12
-l=0.4u
+l=0.45u
 w=2u
  ng=1
  m=1

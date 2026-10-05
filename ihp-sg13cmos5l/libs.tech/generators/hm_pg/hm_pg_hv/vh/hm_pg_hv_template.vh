@@ -1,4 +1,4 @@
-module hm_pg_lv_{{WIDTH}}x{{HEIGHT}} (
+module hm_pg_hv_{{WIDTH}}x{{HEIGHT}} (
 `ifdef USE_POWER_PINS
   inout VAPWR,
   inout VDPWR,

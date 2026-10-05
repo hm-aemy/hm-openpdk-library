@@ -50,7 +50,7 @@ def cross_couple_inv_hv(
         busSide="middle",
         pinName="ccGate",
         pinLayer="Metal1pin",
-        pinTextLayer="Metal1text"
+        pinTextLayer=None
     )
 
     pmos_inv_hv_cc_drains, pmos_inv_hv_cc_sources = get_sd_ports_even_odd(pmos_inv_hv_cc)
@@ -275,7 +275,7 @@ def cross_couple_inv_hv(
         verticalConnWidth=cc_nmos_length,
         pinName="IN",
         pinLayer="Metal1pin",
-        pinTextLayer="Metal1text"
+        pinTextLayer=None
 
     )
     #c.add_port(
@@ -564,7 +564,7 @@ def lv2hv() -> Component:
         layer="Metal1pin",
         port_type="electrical",
     )
-    c.add_label(text="IN", position=inBuf.ports["IN"].center, layer="Metal1text")
+    #c.add_label(text="IN", position=inBuf.ports["IN"].center, layer="Metal1text")
 
 
     c.add_port(
@@ -575,7 +575,7 @@ def lv2hv() -> Component:
         layer="Metal1pin",
         port_type="electrical",
     )
-    c.add_label(text="OUT_P", position=cc.ports["OUT_P"].center, layer="Metal1text")
+    #c.add_label(text="OUT_P", position=cc.ports["OUT_P"].center, layer="Metal1text")
 
     c.add_port(
         name="VSS_0",
@@ -585,7 +585,7 @@ def lv2hv() -> Component:
         layer="Metal1pin",
         port_type="electrical",
     )
-    c.add_label(text="VSS_0", position=cc.ports["VSS_0"].center, layer="Metal1text")
+    #c.add_label(text="VSS_0", position=cc.ports["VSS_0"].center, layer="Metal1text")
     c.add_port(
         name="VSS_1",
         center=cc.ports["VSS_1"].center,
@@ -594,7 +594,7 @@ def lv2hv() -> Component:
         layer="Metal1pin",
         port_type="electrical",
     )
-    c.add_label(text="VSS_1", position=cc.ports["VSS_1"].center, layer="Metal1text")
+    #c.add_label(text="VSS_1", position=cc.ports["VSS_1"].center, layer="Metal1text")
 
     c.add_port(
         name="VSS_BUFF",
@@ -604,7 +604,7 @@ def lv2hv() -> Component:
         layer="Metal1pin",
         port_type="electrical",
     )
-    c.add_label(text="VSS_BUFF", position=inBuf.ports["VSS"].center, layer="Metal1text")
+    #c.add_label(text="VSS_BUFF", position=inBuf.ports["VSS"].center, layer="Metal1text")
     c.add_port(
         name="VDD_BUFF",
         center=inBuf.ports["VDD"].center,
@@ -613,7 +613,7 @@ def lv2hv() -> Component:
         layer="Metal1pin",
         port_type="electrical",
     )
-    c.add_label(text="VDD_BUFF", position=inBuf.ports["VDD"].center, layer="Metal1text")
+    #c.add_label(text="VDD_BUFF", position=inBuf.ports["VDD"].center, layer="Metal1text")
 
     c.add_port(
         name="VDD_CC",
@@ -623,7 +623,7 @@ def lv2hv() -> Component:
         layer="Metal1pin",
         port_type="electrical",
     )
-    c.add_label(text="VDD_CC", position=cc.ports["VDD_CC"].center, layer="Metal1text")
+    #c.add_label(text="VDD_CC", position=cc.ports["VDD_CC"].center, layer="Metal1text")
 
     return c
 

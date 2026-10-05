@@ -1,4 +1,4 @@
-module hm_pg_lv_17x200 (
+module hm_pg_hv_17x200 (
 `ifdef USE_POWER_PINS
   inout VAPWR,
   inout VDPWR,
