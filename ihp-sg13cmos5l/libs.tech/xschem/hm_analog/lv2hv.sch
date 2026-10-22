@@ -165,7 +165,7 @@ spiceprefix=X
 }
 C {sg13cmos5l_pr/sg13_hv_nmos.sym} 170 70 0 0 {name=M6
 l=0.45u
-w=1u
+w=1.5u
  ng=1
  m=1
   mm_ok=1
@@ -201,7 +201,7 @@ spiceprefix=X
 }
 C {sg13cmos5l_pr/sg13_hv_nmos.sym} 390 70 0 1 {name=M10
 l=0.45u
-w=1u
+w=1.5u
  ng=1
  m=1
   mm_ok=1
