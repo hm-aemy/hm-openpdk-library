@@ -7,9 +7,14 @@ LIBS_REF_DIR = ../../libs.ref/hm_pg
 PDK=ihp-sg13cmos5l
 PDK_ROOT?=../../../pdk/
 GDSFACTORY_VENV=.venv
+MAGIC ?= magic
+MAGIC_RC ?= $(PDK_ROOT)/$(PDK)/libs.tech/magic/$(PDK).magicrc
 
 .PHONY: all
-all: layout drc spice cdl lvs lef vh release
+all: layout drc spice cdl lvs lef vh xschem sim release
+
+.PHONY: shapeforge
+shapeforge: drc spice cdl lvs lef vh pex release
 
 .PHONY: layout
 layout:
@@ -22,7 +27,24 @@ drc:
 
 .PHONY: spice
 spice:
-	python helpers/generate_netlist.py --template ./hm_pg/hm_pg_$(TYPE)/spice/hm_pg_$(TYPE)_template.spice --params ./hm_pg/hm_pg_$(TYPE)/output/json/params_$(WIDTH)x$(HEIGHT).json --output ./hm_pg/hm_pg_$(TYPE)/output/spice/hm_pg_$(TYPE)_$(WIDTH)x$(HEIGHT).spice
+	python helpers/generate_netlist.py --template ./hm_pg/hm_pg_$(TYPE)/spice/hm_pg_$(TYPE)_template.spice --params ./hm_pg/hm_pg_$(TYPE)/output/json/params_$(WIDTH)x$(HEIGHT).json --output ./hm_pg/hm_pg_$(TYPE)/output/spice/hm_pg_$(TYPE)_$(WIDTH)x$(HEIGHT).spice --WIDTH $(WIDTH) --HEIGHT $(HEIGHT)
+	python helpers/generate_netlist.py --template ./hm_pg/hm_pg_$(TYPE)/spice/tb_ron.spice --params ./hm_pg/hm_pg_$(TYPE)/output/json/params_$(WIDTH)x$(HEIGHT).json --output ./hm_pg/hm_pg_$(TYPE)/output/spice/tb_ron_$(WIDTH)x$(HEIGHT).spice --WIDTH $(WIDTH) --HEIGHT $(HEIGHT)
+	python helpers/generate_netlist.py --template ./hm_pg/hm_pg_$(TYPE)/spice/tb_onoff.spice --params ./hm_pg/hm_pg_$(TYPE)/output/json/params_$(WIDTH)x$(HEIGHT).json --output ./hm_pg/hm_pg_$(TYPE)/output/spice/tb_onoff_$(WIDTH)x$(HEIGHT).spice --WIDTH $(WIDTH) --HEIGHT $(HEIGHT)
+	python helpers/generate_netlist.py --template ./hm_pg/hm_pg_$(TYPE)/spice/tb_disch.spice --params ./hm_pg/hm_pg_$(TYPE)/output/json/params_$(WIDTH)x$(HEIGHT).json --output ./hm_pg/hm_pg_$(TYPE)/output/spice/tb_disch_$(WIDTH)x$(HEIGHT).spice --WIDTH $(WIDTH) --HEIGHT $(HEIGHT)
+	python helpers/generate_netlist.py --template ./hm_pg/hm_pg_$(TYPE)/spice/tb_leakage.spice --params ./hm_pg/hm_pg_$(TYPE)/output/json/params_$(WIDTH)x$(HEIGHT).json --output ./hm_pg/hm_pg_$(TYPE)/output/spice/tb_leakage_$(WIDTH)x$(HEIGHT).spice --WIDTH $(WIDTH) --HEIGHT $(HEIGHT)
+
+.PHONY: sim
+sim:
+	ngspice -b ./hm_pg/hm_pg_$(TYPE)/output/spice/tb_ron_$(WIDTH)x$(HEIGHT).spice
+	ngspice -b ./hm_pg/hm_pg_$(TYPE)/output/spice/tb_onoff_$(WIDTH)x$(HEIGHT).spice
+	ngspice -b ./hm_pg/hm_pg_$(TYPE)/output/spice/tb_disch_$(WIDTH)x$(HEIGHT).spice
+	ngspice -b ./hm_pg/hm_pg_$(TYPE)/output/spice/tb_leakage_$(WIDTH)x$(HEIGHT).spice
+
+.PHONY: sim-plot
+sim-plot:
+	python helpers/plot.py tb_ron_$(WIDTH)x$(HEIGHT).raw --x "i(i-sweep)" --y "v(gpwr)"
+	python helpers/plot.py tb_onoff_$(WIDTH)x$(HEIGHT).raw --x "time" --y "v(ctrl)" "v(gpwr)"
+	python helpers/plot.py tb_disch_$(WIDTH)x$(HEIGHT).raw --x "time" --y "v(ctrl)" "v(gpwr)" --y "i(@cload[i])"
 
 .PHONY: cdl
 cdl:
@@ -39,7 +61,8 @@ lvs:
 
 .PHONY: xschem
 xschem:
-	python helpers/generate_netlist.py --template ./hm_pg/hm_pg_$(TYPE)/xschem/hm_pg_$(TYPE).sch --params ./hm_pg/hm_pg_$(TYPE)/output/json/params_17x200.json --output ./hm_pg/hm_pg_$(TYPE)/output/xschem/hm_pg_$(TYPE)_17x200.sch
+	python helpers/generate_netlist.py --template ./hm_pg/hm_pg_$(TYPE)/xschem/hm_pg_$(TYPE).sch --params ./hm_pg/hm_pg_$(TYPE)/output/json/params_$(WIDTH)x$(HEIGHT).json --output ./hm_pg/hm_pg_$(TYPE)/output/xschem/hm_pg_$(TYPE)_$(WIDTH)x$(HEIGHT).sch
+	python helpers/generate_netlist.py --template ./hm_pg/hm_pg_$(TYPE)/xschem/dischg.sch --params ./hm_pg/hm_pg_$(TYPE)/output/json/params_$(WIDTH)x$(HEIGHT).json --output ./hm_pg/hm_pg_$(TYPE)/output/xschem/dischg.sch
 
 .PHONY: lef
 lef: 
@@ -48,6 +71,14 @@ lef:
 	CELL_NAME="hm_pg_$(TYPE)_$(WIDTH)x$(HEIGHT)" \
 	LEF_FILE="$(OUTPUT_DIR)/lef/hm_pg_$(TYPE)_$(WIDTH)x$(HEIGHT).lef" \
 	magic -dnull -noconsole ./hm_pg/hm_pg_$(TYPE)/lef/extract_lef.tcl
+
+.PHONY: pex
+pex:
+	mkdir -p $(OUTPUT_DIR)/pex
+	GDS_FILE="$(OUTPUT_DIR)/gds/hm_pg_$(TYPE)_$(WIDTH)x$(HEIGHT).gds" \
+	CELL_NAME="hm_pg_$(TYPE)_$(WIDTH)x$(HEIGHT)" \
+	SPICE_FILE="$(OUTPUT_DIR)/pex/hm_pg_$(TYPE)_$(WIDTH)x$(HEIGHT).spice" \
+	$(MAGIC) -dnull -noconsole -rcfile "$(MAGIC_RC)" ./hm_pg/hm_pg_$(TYPE)/pex/pex.tcl
 
 .PHONY: release
 release:
@@ -61,6 +92,17 @@ release:
 	cp $(OUTPUT_DIR)/cdl/hm_pg_$(TYPE)_$(WIDTH)x$(HEIGHT).spice $(LIBS_REF_DIR)/cdl/hm_pg_$(TYPE)_$(WIDTH)x$(HEIGHT).spice
 	mkdir -p $(LIBS_REF_DIR)/vh
 	cp $(OUTPUT_DIR)/vh/hm_pg_$(TYPE)_$(WIDTH)x$(HEIGHT).vh $(LIBS_REF_DIR)/vh/hm_pg_$(TYPE)_$(WIDTH)x$(HEIGHT).vh
+
+.PHONY: sim-pex
+sim-pex:
+	cp ./hm_pg/hm_pg_$(TYPE)/output/spice/tb_ron_$(WIDTH)x$(HEIGHT).spice ./hm_pg/hm_pg_$(TYPE)/output/pex/tb_ron_$(WIDTH)x$(HEIGHT).spice
+	cp ./hm_pg/hm_pg_$(TYPE)/output/spice/tb_onoff_$(WIDTH)x$(HEIGHT).spice ./hm_pg/hm_pg_$(TYPE)/output/pex/tb_onoff_$(WIDTH)x$(HEIGHT).spice
+	cp ./hm_pg/hm_pg_$(TYPE)/output/spice/tb_disch_$(WIDTH)x$(HEIGHT).spice ./hm_pg/hm_pg_$(TYPE)/output/pex/tb_disch_$(WIDTH)x$(HEIGHT).spice
+	cp ./hm_pg/hm_pg_$(TYPE)/output/spice/tb_leakage_$(WIDTH)x$(HEIGHT).spice ./hm_pg/hm_pg_$(TYPE)/output/pex/tb_leakage_$(WIDTH)x$(HEIGHT).spice
+	ngspice -b ./hm_pg/hm_pg_$(TYPE)/output/pex/tb_ron_$(WIDTH)x$(HEIGHT).spice
+	ngspice -b ./hm_pg/hm_pg_$(TYPE)/output/pex/tb_onoff_$(WIDTH)x$(HEIGHT).spice
+	ngspice -b ./hm_pg/hm_pg_$(TYPE)/output/pex/tb_disch_$(WIDTH)x$(HEIGHT).spice
+	ngspice -b ./hm_pg/hm_pg_$(TYPE)/output/pex/tb_leakage_$(WIDTH)x$(HEIGHT).spice
 
 .PHONY: clean
 clean:
