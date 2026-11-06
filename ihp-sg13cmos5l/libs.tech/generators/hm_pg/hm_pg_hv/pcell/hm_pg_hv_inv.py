@@ -8,9 +8,9 @@ PDK.activate()
 
 @gf.cell
 def inverter(
-    width_p=4.44,
-    width_n=2.6,
-    length=0.45,
+    width_p: float=4.44,
+    width_n: float=2.6,
+    length: float=0.45,
 ) -> Component:
     c = Component("inverter")
 

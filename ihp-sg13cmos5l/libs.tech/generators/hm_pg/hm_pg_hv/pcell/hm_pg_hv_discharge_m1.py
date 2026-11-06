@@ -18,10 +18,10 @@ PDK.activate()
 
 @gf.cell
 def discharge_m1(
-    width=0.5,
-    length=0.65,
-    stages=6,
-    branches=2,
+    width: float=0.5,
+    length: float=0.65,
+    stages: int=6,
+    branches: int=2,
 ) -> Component:
     c = Component("discharge_m1")
 
@@ -211,10 +211,18 @@ def discharge_m1(
 
 
     c.add_port(
-        name="SOURCE",
-        center=(ring_right, drain_right.center[1]),
-        width=guard_width,
-        orientation=0,
+        name="SOURCE_0",
+        center=drain_left.center,
+        width=drain_left.width,
+        orientation=90,
+        layer="Metal1pin",
+        port_type="electrical",
+    )
+    c.add_port(
+        name="SOURCE_1",
+        center=drain_right.center,
+        width=drain_right.width,
+        orientation=90,
         layer="Metal1pin",
         port_type="electrical",
     )

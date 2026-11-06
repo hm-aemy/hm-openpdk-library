@@ -23,10 +23,10 @@ def get_sd_ports_even_odd(ref):
 
 @gf.cell
 def power_lv_pmos(
-    width=100.0,
-    length=0.13,
-    nf=10,
-    sd_sep=0.5
+    width: float =100.0,
+    length: float =0.13,
+    nf: int =10,
+    sd_sep: float=0.5
 ) -> Component:
 
     pmosSep=-0.02 #Needed for both psD to meet.

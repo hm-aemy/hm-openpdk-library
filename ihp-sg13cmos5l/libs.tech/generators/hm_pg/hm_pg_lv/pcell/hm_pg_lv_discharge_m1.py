@@ -18,10 +18,10 @@ PDK.activate()
 
 @gf.cell
 def discharge_m1(
-    width=0.5,
-    length=0.65,
-    stages=6,
-    branches=2,
+    width: float = 0.5,
+    length: float = 0.65,
+    stages: int = 6,
+    branches: int = 2,
 ) -> Component:
     c = Component("discharge_m1")
 
