@@ -44,7 +44,7 @@ C {iopin.sym} -60 120 2 0 {name=p3 lab=VGND}
 C {iopin.sym} 510 -120 0 0 {name=p4 lab=GPWR}
 C {sg13cmos5l_pr/sg13_lv_nmos.sym} -20 60 0 0 {name=M1
 l=0.13u
-w=2.6u
+w=4u
 ng=1
 m=1
 mm_ok=1
@@ -53,7 +53,7 @@ spiceprefix=X
 }
 C {sg13cmos5l_pr/sg13_lv_pmos.sym} -20 -60 0 0 {name=M2
 l=0.13u
-w=4.44u
+w=8u
 ng=1
 m=1
 mm_ok=1
@@ -62,8 +62,8 @@ spiceprefix=X
 }
 C {sg13cmos5l_pr/sg13_lv_pmos.sym} 160 -100 3 0 {name=M3
 l=0.13u
-w=2593.69u
-ng=374
+w=2505.34u
+ng=361
 m=2
 mm_ok=1
 model=sg13_lv_pmos

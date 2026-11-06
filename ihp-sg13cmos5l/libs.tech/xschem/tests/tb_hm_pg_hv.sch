@@ -90,6 +90,7 @@ end
 
 plot ron_vec vs ivec
 plot vdd_dutvec vs ivec
+plot vdd_dut
 
 .endc
 "}

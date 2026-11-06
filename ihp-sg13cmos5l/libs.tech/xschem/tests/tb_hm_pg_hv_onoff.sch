@@ -41,8 +41,8 @@ C {devices/code.sym} -170 -160 0 0 {name=TT_MODELS
 only_toplevel=true
 format="tcleval( @value )"
 value="
-.lib cornerMOShv.lib mos_tt
-.lib cornerMOSlv.lib mos_tt
+.lib cornerMOShv.lib mos_sf
+.lib cornerMOSlv.lib mos_sf
 *.lib cornerCAP.lib cap_typ
 "
 spice_ignore=false}
@@ -57,10 +57,11 @@ tran 10n 50u
 
 plot vdd_dut
 plot ctrl x1.h_crtl_p
+plot ctrl x1.x2.ccp x1.x2.ccn
 
 .endc
 "}
-C {devices/vsource.sym} 40 -110 0 0 {name=V1 value=1.2 savecurrent=true}
+C {devices/vsource.sym} 40 -110 0 0 {name=V1 value=1.08 savecurrent=true}
 C {devices/gnd.sym} 40 -70 0 0 {name=l5 lab=GND}
 C {devices/lab_pin.sym} 40 -150 2 1 {name=p8 sig_type=std_logic lab=vdd_d
 }
@@ -89,7 +90,7 @@ C {devices/gnd.sym} 160 -70 0 0 {name=l4 lab=GND}
 C {devices/lab_pin.sym} 160 -150 2 1 {name=p5 sig_type=std_logic lab=vdd_a
 }
 C {/foss/designs/hm-openpdk-library/ihp-sg13cmos5l/libs.tech/xschem/hm_analog/hm_pg_hv.sym} 110 70 0 0 {name=x1}
-C {devices/vsource.sym} -180 110 0 1 {name=V2 value="PULSE(1.2 0 0 1n 1n 10u 20u)" savecurrent=false}
+C {devices/vsource.sym} -180 110 0 1 {name=V2 value="PULSE(1.08 0 0 1n 1n 10u 20u)" savecurrent=false}
 C {devices/gnd.sym} -180 140 0 0 {name=l2 lab=GND}
 C {devices/lab_pin.sym} -160 80 3 1 {name=p2 sig_type=std_logic lab=ctrl
 }
