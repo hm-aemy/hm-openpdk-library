@@ -150,6 +150,14 @@ def power_hv_pmos(
             layer="Metal2pin",
             port_type="electrical"
         )
+        c.add_port(
+            name="OUT",
+            center=((dFirstCenter[0]+dLastCenter[0])/2, dFirstCenter[1]-0.06/2),
+            width=dFirstWidth-0.06,
+            orientation=90,
+            layer="Metal2pin",
+            port_type="electrical"
+        )
 
     guard_bbox = (
         (c.xmin, c.ymin-overlap/2),
@@ -207,7 +215,7 @@ def power_hv_pmos(
 
     c.add_port(
         name="GuardRingBottom",
-        center=((c.xmin+c.xmax)/2, c.ymin+0.15+0.3), #TODO: Change for relative values
+        center=((c.xmin+c.xmax)/2, c.ymin+0.24+0.32/2), #TODO: Change for relative values
         width=c.xmax-c.xmin,
         orientation=180,
         layer="Metal1pin",
@@ -215,7 +223,7 @@ def power_hv_pmos(
     )
     c.add_port(
         name="GuardRingTop",
-        center=((c.xmin+c.xmax)/2, c.ymax-0.15-0.3), #TODO: Change for relative values
+        center=((c.xmin+c.xmax)/2, c.ymax-0.24-0.32/2), #TODO: Change for relative values
         width=c.xmax-c.xmin,
         orientation=180,
         layer="Metal1pin",

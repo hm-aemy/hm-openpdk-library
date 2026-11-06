@@ -10,7 +10,7 @@ PDK.activate()
 
 @gf.cell
 def cross_couple_inv_hv(
-    cc_nmos_width = 1.0,
+    cc_nmos_width = 3.2,
     cc_pmos_width = 1.0,
     cc_nmos_length = 0.45,
     cc_pmos_length = 0.45,
@@ -43,7 +43,7 @@ def cross_couple_inv_hv(
     _connect_ports_to_bus_v3(
         c,
         [pmos_inv_hv_cc.ports["G1"], pmos_inv_hv_cc.ports["G2"], pmos_inv_hv_cc.ports["G3"], nmos_inv_hv.ports["G"]],
-        offset=0.03,
+        offset=1.2,
         verticalConnWidth=cc_pmos_length,
         horizontalLayer="Metal1drawing",
         verticalLayer="GatPolydrawing",
@@ -129,8 +129,8 @@ def cross_couple_inv_hv(
 
     invHvOutPath = [
         pmos_inv_hv_cc_drains[1].center,
-        (pmos_inv_hv_cc_drains[1].center[0], (pmos_inv_hv_cc.ymin+nmos_inv_hv.ymax)/2),
-        (nmos_inv_hv_drains[0].center[0], (pmos_inv_hv_cc.ymin+nmos_inv_hv.ymax)/2),
+        (pmos_inv_hv_cc_drains[1].center[0], (pmos_inv_hv_cc.ymin+nmos_inv_hv.ymax)/2+1.2),
+        (nmos_inv_hv_drains[0].center[0], (pmos_inv_hv_cc.ymin+nmos_inv_hv.ymax)/2+1.2),
         nmos_inv_hv_drains[0].center
     ]
     path = gf.Path(invHvOutPath)
@@ -143,7 +143,7 @@ def cross_couple_inv_hv(
 
     nmosVSSPath = [
         nmos_cc_sources[0].center,
-        nmos_inv_hv_sources[0].center
+        (nmos_inv_hv_sources[0].center[0], nmos_cc_sources[0].center[1])
     ]
     path = gf.Path(nmosVSSPath)
     path_component = gf.path.extrude(
@@ -191,7 +191,7 @@ def cross_couple_inv_hv(
             (nmos_inv_hv.xmax, nmos_inv_hv.ymin),
             (nmos_cc.xmin, nmos_cc.ymin),
             (nmos_cc.xmin, nmos_cc.ymax),
-            (nmos_inv_hv.xmax, nmos_inv_hv.ymax),
+            (nmos_inv_hv.xmax, nmos_cc.ymax),
         ],
         layer="ThickGateOxdrawing"
     )
@@ -199,7 +199,7 @@ def cross_couple_inv_hv(
     c.add_polygon(
         [
             (nmos_cc.xmin, nmos_cc.ymax),
-            (nmos_inv_hv.xmax, nmos_inv_hv.ymax),
+            (nmos_inv_hv.xmax, nmos_cc.ymax),
             (pmos_inv_hv_cc.xmax, pmos_inv_hv_cc.ymin),
             (pmos_inv_hv_cc.xmin, pmos_inv_hv_cc.ymin),
         ],
