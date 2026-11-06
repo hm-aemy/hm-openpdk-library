@@ -1,0 +1,25 @@
+.lib cornerMOShv.lib mos_tt
+
+.include "hm_pg_hv_{{WIDTH}}x{{HEIGHT}}.spice"
+
+.param VDD=3.3
+.param ILOAD=50m
+.param STEP=1n
+.param STOP=400n
+.param RLOAD={VDD/ILOAD}
+
+VDD_IN VPWR 0 {VDD}
+VCTRL ctrl 0 0
+VG VGND 0 0
+Rload GPWR 0 {RLOAD}
+Cload GPWR 0 10e-12
+
+.options savecurrents
+
+
+.control
+save all
+op
+write tb_leakage_{{WIDTH}}x{{HEIGHT}}.raw
+.endc
+.end

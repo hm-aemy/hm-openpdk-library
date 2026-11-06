@@ -1,0 +1,27 @@
+.lib cornerMOShv.lib mos_tt
+.lib cornerMOSlv.lib mos_tt
+
+.include "hm_pg_hv_{{WIDTH}}x{{HEIGHT}}.spice"
+
+.param VDD_A=3.3
+.param VDD_D=1.2
+.param ILOAD=10m
+.param STEP=1n
+.param STOP=300n
+.param RLOAD={VDD_A/ILOAD}
+
+VDD_A VAPWR 0 {VDD_A}
+VDD_D VDPWR 0 {VDD_D}
+VCTRL ctrl 0 PULSE(1.2 0 0 1n 1n 100n 200n)
+VG VGND 0 0
+Rload GPWR 0 {RLOAD}
+
+XPG GPWR VAPWR VDPWR ctrl VGND hm_pg_hv_{{WIDTH}}x{{HEIGHT}}
+
+.tran {STEP} {STOP}
+
+.control
+run
+write tb_onoff_{{WIDTH}}x{{HEIGHT}}.raw v(ctrl) v(GPWR)
+.endc
+.end

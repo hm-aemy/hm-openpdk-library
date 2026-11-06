@@ -1,0 +1,46 @@
+.lib cornerMOShv.lib mos_tt
+.lib cornerMOSlv.lib mos_tt
+
+.include "hm_pg_hv_{{WIDTH}}x{{HEIGHT}}.spice"
+
+.param VDD_A=3.3
+.param VDD_D=1.2
+.param IMAX=100m
+.param ISTEP=100u
+.param DCMAX={IMAX + 0.5*ISTEP}
+.param I1=5m
+.param I2=90m
+
+VDD_A VAPWR 0 {VDD_A}
+VDD_D VDPWR 0 {VDD_D}
+VCTRL ctrl 0 1
+VG VGND 0 0
+Iload GPWR 0 0
+
+.meas dc vin_at_max  FIND v(VAPWR) AT={IMAX}
+.meas dc vout_at_max FIND v(GPWR) AT={IMAX}
+.meas dc vdrop_max PARAM='vin_at_max-vout_at_max'
+.meas dc ron_at_max PARAM='vdrop_max/IMAX'
+.meas dc pcond_max PARAM='vdrop_max*IMAX'
+
+* Caída de tensión en dos puntos
+.meas dc vin_i1  FIND v(VAPWR) AT={I1}
+.meas dc vout_i1 FIND v(GPWR) AT={I1}
+.meas dc vdrop_i1 PARAM='vin_i1-vout_i1'
+
+.meas dc vin_i2  FIND v(VAPWR) AT={I2}
+.meas dc vout_i2 FIND v(GPWR) AT={I2}
+.meas dc vdrop_i2 PARAM='vin_i2-vout_i2'
+
+* Resistencia incremental entre I1 e I2
+.meas dc ron_incremental PARAM='(vdrop_i2-vdrop_i1)/(I2-I1)'
+
+XPG GPWR VAPWR VDPWR ctrl VGND hm_pg_hv_{{WIDTH}}x{{HEIGHT}}
+
+.dc Iload 0 {DCMAX} {ISTEP}
+
+.control
+run
+write tb_ron_{{WIDTH}}x{{HEIGHT}}.raw v(VAPWR) v(GPWR)
+.endc
+.end

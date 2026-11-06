@@ -1,0 +1,28 @@
+.lib cornerMOSlv.lib mos_tt
+
+.include "hm_pg_lv_{{WIDTH}}x{{HEIGHT}}.spice"
+
+.options method=gear
+
+.param VDD=1.2
+.param ILOAD=50m
+.param STEP=10n
+.param STOP=1.5u
+
+VDD_IN VPWR 0 {VDD}
+VCTRL ctrl 0 PULSE(0 1.2 100n 1n 1n 100n 1.5u)
+VG VGND 0 0
+Cload GPWR 0 10e-12
+
+.options savecurrents
+
+XPG VPWR GPWR VGND ctrl hm_pg_lv_{{WIDTH}}x{{HEIGHT}}
+
+.tran {STEP} {STOP}
+
+.control
+save all
+run
+write tb_disch_{{WIDTH}}x{{HEIGHT}}.raw
+.endc
+.end

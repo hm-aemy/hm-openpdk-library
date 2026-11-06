@@ -1,17 +1,28 @@
-XM1 ctrl_n ctrl VGND VGND sg13_lv_nmos w=2.6u l=0.13u ng=1 m=1 mm_ok=1
-XM2 ctrl_n ctrl VPWR VPWR sg13_lv_pmos w=4.44u l=0.13u ng=1 m=1 mm_ok=1
+.subckt hm_pg_lv_{{WIDTH}}x{{HEIGHT}} VPWR GPWR VGND CTRL
+XM1 ctrl_n ctrl VGND VGND sg13_lv_nmos w={{invNmosW}}u l={{invNmosL}}u ng=1 m=1 mm_ok=1
+XM2 ctrl_n ctrl VPWR VPWR sg13_lv_pmos w={{invPmosW}}u l={{invPmosL}}u ng=1 m=1 mm_ok=1
 XM3 GPWR ctrl_n VPWR VPWR sg13_lv_pmos w={{width}}u l={{length}}u ng={{ng}} m={{m}} mm_ok=1
 x1 VGND GPWR ctrl_n dischg
+.ends
 
 .subckt dischg VGND GPWR gate
-XM1 GPWR gate net1 VGND sg13_lv_nmos w=0.50u l=0.65u ng=1 m=1 mm_ok=1
-XM2 net1 gate net2 VGND sg13_lv_nmos w=0.50u l=0.65u ng=1 m=1 mm_ok=1
-XM3 net2 gate net3 VGND sg13_lv_nmos w=0.50u l=0.65u ng=1 m=1 mm_ok=1
-XM4 net3 gate VGND VGND sg13_lv_nmos w=0.50u l=0.65u ng=1 m=1 mm_ok=1
-XM5 GPWR gate net6 VGND sg13_lv_nmos w=0.50u l=0.65u ng=1 m=1 mm_ok=1
-XM6 net6 gate net5 VGND sg13_lv_nmos w=0.50u l=0.65u ng=1 m=1 mm_ok=1
-XM7 net5 gate net4 VGND sg13_lv_nmos w=0.50u l=0.65u ng=1 m=1 mm_ok=1
-XM8 net4 gate VGND VGND sg13_lv_nmos w=0.50u l=0.65u ng=1 m=1 mm_ok=1
+XM1 GPWR gate net1 VGND sg13_lv_nmos w={{dischW}}u l={{dischL}}u ng=1 m=1 mm_ok=1
+XM2 net1 gate net2 VGND sg13_lv_nmos w={{dischW}}u l={{dischL}}u ng=1 m=1 mm_ok=1
+XM3 net2 gate net3 VGND sg13_lv_nmos w={{dischW}}u l={{dischL}}u ng=1 m=1 mm_ok=1
+XM4 net3 gate net4 VGND sg13_lv_nmos w={{dischW}}u l={{dischL}}u ng=1 m=1 mm_ok=1
+XM5 net4 gate net5 VGND sg13_lv_nmos w={{dischW}}u l={{dischL}}u ng=1 m=1 mm_ok=1
+XM6 net5 gate net6 VGND sg13_lv_nmos w={{dischW}}u l={{dischL}}u ng=1 m=1 mm_ok=1
+XM7 net6 gate net7 VGND sg13_lv_nmos w={{dischW}}u l={{dischL}}u ng=1 m=1 mm_ok=1
+XM8 net7 gate VGND VGND sg13_lv_nmos w={{dischW}}u l={{dischL}}u ng=1 m=1 mm_ok=1
+
+XM9 GPWR gate net8 VGND sg13_lv_nmos w={{dischW}}u l={{dischL}}u ng=1 m=1 mm_ok=1
+XM10 net8 gate net9 VGND sg13_lv_nmos w={{dischW}}u l={{dischL}}u ng=1 m=1 mm_ok=1
+XM11 net9 gate net10 VGND sg13_lv_nmos w={{dischW}}u l={{dischL}}u ng=1 m=1 mm_ok=1
+XM12 net10 gate net11 VGND sg13_lv_nmos w={{dischW}}u l={{dischL}}u ng=1 m=1 mm_ok=1
+XM13 net11 gate net12 VGND sg13_lv_nmos w={{dischW}}u l={{dischL}}u ng=1 m=1 mm_ok=1
+XM14 net12 gate net13 VGND sg13_lv_nmos w={{dischW}}u l={{dischL}}u ng=1 m=1 mm_ok=1
+XM15 net13 gate net14 VGND sg13_lv_nmos w={{dischW}}u l={{dischL}}u ng=1 m=1 mm_ok=1
+XM16 net14 gate VGND VGND sg13_lv_nmos w={{dischW}}u l={{dischL}}u ng=1 m=1 mm_ok=1
 .ends
 
 .end
